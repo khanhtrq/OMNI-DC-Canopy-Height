@@ -123,6 +123,8 @@ Run
 cd src
 sh testing_script/demo.sh 
 ```
+Note: Do NOT directly run `demo.py`. The model configs are different than default and can cause shape mismatch when loading the checkpoints.
+
 We prepare example images under the `figures` folder. Results are saved under `experiments`.
 
 To run with your own data, prepare an rgb image and the corresponding sparse depth map as an npy file: 1) with the same resolution as the image; 2) 0 values indicate unknown depth.
