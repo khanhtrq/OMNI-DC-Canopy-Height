@@ -188,10 +188,10 @@ sh training_scripts/train_full.sh
 ## Citation 
 If you find our work helpful please consider citing our paper:
 ```
-@article{zuo2024omni,
-   title={OMNI-DC: Highly Robust Depth Completion with Multiresolution Depth Integration},
-   author={Zuo, Yiming and Yang, Willow and Ma, Zeyu and Deng, Jia},
-   journal={arXiv preprint arXiv:2411.19278},
-   year={2024}
+@inproceedings{zuo2025omni,
+  title     = {OMNI-DC: Highly Robust Depth Completion with Multiresolution Depth Integration},
+  author    = {Zuo, Yiming and Yang, Willow and Ma, Zeyu and Deng, Jia},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+  year      = {2025}
 }
 ```
