@@ -29,7 +29,7 @@
 We present a depth completion model that works well on unseen datasets and various depth patterns (zero-shot). It can be used to regularize Gaussian Splatting models to achieve better rendering quality, or work with LiDARs for dense mapping.
 
 ## Change Logs
-- 11/3/2025 Access pretrained weights through Huggingface :hugging_face:
+- 11/3/2025 Access pretrained weights through Huggingface 🤗.
 - 6/25/2025 Added a demo script for easy testing on custom data.
 - 6/25/2025 Paper accepted to ICCV 2025!
 - 3/21/2025 v1.1 relased.
