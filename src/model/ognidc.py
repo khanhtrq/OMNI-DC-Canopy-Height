@@ -15,6 +15,8 @@ from optim_layer.optim_layer import DepthGradOptimLayer
 from depth_models.depth_anything_v2.depth_anything_v2.dpt import DepthAnythingV2
 from align_utils import resize_image, depth2disparity, disparity2depth, align_least_square, align_single_res
 
+from huggingface_hub import PyTorchModelHubMixin
+
 dav2_model_configs = {
     'vits': {'encoder': 'vits', 'features': 64, 'out_channels': [48, 96, 192, 384]},
     'vitb': {'encoder': 'vitb', 'features': 128, 'out_channels': [96, 192, 384, 768]},
@@ -36,7 +38,7 @@ def upsample_depth(depth, mask, r=8):
     return up_depth.reshape(N, 1, r * H, r * W)
 
 
-class OGNIDC(nn.Module):
+class OGNIDC(nn.Module, PyTorchModelHubMixin):
     def __init__(self, args):
         super(OGNIDC, self).__init__()
 

@@ -45,6 +45,7 @@ import torchvision.transforms as T
 from PIL import Image
 import matplotlib.pyplot as plt
 
+
 # Minimize randomness
 def init_seed(seed=None):
     if seed is None:
@@ -75,33 +76,45 @@ def check_args(args):
     return new_args
 
 def test(args):
+    
+    ######## If not loading using huggingface ########
     # Network
+    # if args.model == 'OGNIDC':
+    #     net = OGNIDC(args)
+    # else:
+    #     raise TypeError(args.model, ['OGNIDC', ])
+    
+    # net.cuda()
+
+    # if args.pretrain is not None:
+    #     assert os.path.exists(args.pretrain), \
+    #         "file not found: {}".format(args.pretrain)
+
+    #     checkpoint = torch.load(args.pretrain)
+    #     key_m, key_u = net.load_state_dict(checkpoint['net'], strict=False)
+
+    #     if key_u:
+    #         print('Unexpected keys :')
+    #         print(key_u)
+
+    #     if key_m:
+    #         print('Missing keys :')
+    #         print(key_m)
+    #         raise KeyError
+    #     print('Checkpoint loaded from {}!'.format(args.pretrain))
+
+    # net.eval()
+    ########
+
+    ######## Default: loading using huggingface ########
     if args.model == 'OGNIDC':
-        net = OGNIDC(args)
+        net = OGNIDC.from_pretrained("zuoym15/OMNI-DC", args=args)
     else:
         raise TypeError(args.model, ['OGNIDC', ])
-    net.cuda()
-
-    if args.pretrain is not None:
-        assert os.path.exists(args.pretrain), \
-            "file not found: {}".format(args.pretrain)
-
-        checkpoint = torch.load(args.pretrain)
-        key_m, key_u = net.load_state_dict(checkpoint['net'], strict=False)
-
-        if key_u:
-            print('Unexpected keys :')
-            print(key_u)
-
-        if key_m:
-            print('Missing keys :')
-            print(key_m)
-            raise KeyError
-        print('Checkpoint loaded from {}!'.format(args.pretrain))
+    ########
 
     net = nn.DataParallel(net)
-    net.eval()
-
+    
     t_rgb = T.Compose([
         T.ToTensor(),
         T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))

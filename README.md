@@ -29,16 +29,15 @@
 We present a depth completion model that works well on unseen datasets and various depth patterns (zero-shot). It can be used to regularize Gaussian Splatting models to achieve better rendering quality, or work with LiDARs for dense mapping.
 
 ## Change Logs
+- 11/3/2025 Access pretrained weights through Huggingface :hugging_face:
 - 6/25/2025 Added a demo script for easy testing on custom data.
 - 6/25/2025 Paper accepted to ICCV 2025!
 - 3/21/2025 v1.1 relased.
 
 ## V1.1
 
-We find that concatenating the output of Depth Anyting v2 to the sparse depth map improves the results consistently, especially when the input depth is sparse (error reduced by 50% on NYU with 5 points compared to v1.0). 
+We find that concatenating the output of Depth Anyting v2 to the sparse depth map improves the results consistently, especially when the input depth is sparse (error reduced by 50% on NYU with 5 points compared to v1.0). Usage is the same as v1.0.
 
-Download the [Depth Anything checkpoint](https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true) to `src/depth_models/depth_anything_v2/checkpoints`.
-Usage is the same as v1.0. See `testing_scripts/test_v1.1.sh` for an example. Checkpoint can be downloaded [here](https://drive.google.com/file/d/1ssJYFB3rQD5JEYgG7W6tRJg1hpQKvqPD/view?usp=sharing).
 <details>
   <summary>Detailed Accuracy Comparison Between v1.0 and v1.1</summary>
   
@@ -84,6 +83,7 @@ conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit
 pip install mmcv==1.4.4 -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.10/index.html 
 pip install mmsegmentation==0.22.1 
 pip install timm tqdm thop tensorboardX tensorboard opencv-python ipdb h5py ipython Pillow==9.5.0 plyfile einops
+pip install huggingface_hub
 ```
 
 #### NVIDIA Apex
@@ -100,13 +100,20 @@ pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cud
 
 You may face the bug `ImportError: cannot import name 'container_abcs' from 'torch._six'`. In this case, change line 14 of apex/apex/_amp_state.py to `import collections.abc as container_abcs` and re-install apex.
 
+## Checkpoints 
+
+### Option 1: Huggingface
+Access the model here: `https://huggingface.co/zuoym15/OMNI-DC`. See [demo.py](src/demo.py) for an example usage.
+
+### Option 2: Manually Download the Weights
+
 #### Backbone Initialization Files
 Download these `.pt` files to `src/pretrained`:
 ```
 https://drive.google.com/drive/folders/1z2sOkIJHtg1zTYiSRhZRzff0AANprx4O?usp=sharing
 ```
 
-#### Download checkpoints
+#### Pretrained Checkpoints
 Download from 
 ```
 # v1.0
@@ -116,6 +123,9 @@ https://drive.google.com/file/d/1SBRfdhozd-3j6uorjKOMgYGmrd578NvG/view?usp=shari
 https://drive.google.com/file/d/1ssJYFB3rQD5JEYgG7W6tRJg1hpQKvqPD/view?usp=sharing
 ```
 and put it under the `checkpoints` folder.
+
+#### (v1.1 only) DepthAnything Checkpoint
+Download the [Depth Anything checkpoint](https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true) to `src/depth_models/depth_anything_v2/checkpoints`.
 
 ## Demo
 Run 
@@ -152,10 +162,13 @@ We also provide instructions on how to process the original datasets to get thes
 ```
 cd src
 
-# the real and virtual patterns from the 5 datasets reported in tab.1 and tab.2 in the paper
+# v1.1
+sh testing_scripts/test_v1.1.sh
+
+# v1.0, the real and virtual patterns from the 5 datasets reported in tab.1 and tab.2 in the paper
 sh testing_scripts/test_robust_DC.sh
 
-# additional results on the void and nyuv2 datasets
+# v1.0, additional results on the void and nyuv2 datasets
 sh testing_scripts/test_void_nyu.sh
 ```
 ## Test on Your Own Dataset
@@ -186,10 +199,11 @@ sh training_scripts/train_full.sh
 ## Citation 
 If you find our work helpful please consider citing our paper:
 ```
-@article{zuo2024omni,
-   title={OMNI-DC: Highly Robust Depth Completion with Multiresolution Depth Integration},
-   author={Zuo, Yiming and Yang, Willow and Ma, Zeyu and Deng, Jia},
-   journal={arXiv preprint arXiv:2411.19278},
-   year={2024}
+@inproceedings{zuo2025omni,
+  title={Omni-dc: Highly robust depth completion with multiresolution depth integration},
+  author={Zuo, Yiming and Yang, Willow and Ma, Zeyu and Deng, Jia},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={9287--9297},
+  year={2025}
 }
 ```
