@@ -5,8 +5,11 @@ from functools import partial
 import torchvision
 
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-from mmseg.utils import get_root_logger
-from mmcv.runner import load_checkpoint
+
+# from mmseg.utils import get_root_logger
+from mmengine.logging import MMLogger
+
+from mmengine.runner import load_checkpoint
 from resnet_cbam import BasicBlock
 from pathlib import Path
 
@@ -199,7 +202,7 @@ class PyramidVisionTransformer(nn.Module):
         else:
             additional_embedding_dim = 0
 
-        net = get_resnet34(pretrained=True)
+        net = get_resnet34(pretrained=False)
         setattr(self, "embed_layer1", net.layer1)
         setattr(self, "embed_layer2", net.layer2)
         del net
@@ -237,7 +240,8 @@ class PyramidVisionTransformer(nn.Module):
 
     def init_weights(self, pretrained=None):
         if isinstance(pretrained, str):
-            logger = get_root_logger()
+            # logger = get_root_logger()
+            logger = MMLogger.get_current_instance()
             logger.setLevel('ERROR')
             load_checkpoint(self, pretrained, map_location='cpu', strict=False, logger=logger)
             print("===pretrained weight loaded===")

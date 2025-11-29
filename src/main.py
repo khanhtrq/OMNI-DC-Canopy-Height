@@ -30,11 +30,11 @@ from loss.sequentialloss import SequentialLoss
 # NOTE : Only 1 process per GPU is supported now
 import torch.multiprocessing as mp
 import torch.distributed as dist
-import apex
-from apex.parallel import DistributedDataParallel as DDP
-from apex import amp
+# import apex
+# from apex.parallel import DistributedDataParallel as DDP
+# from apex import amp
 # from torch.nn.parallel import DistributedDataParallel as DDP
-# import torch.cuda.amp as amp
+import torch.cuda.amp as amp
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
@@ -71,29 +71,36 @@ def check_args(args):
 def train(gpu, args):
     # Initialize workers
     # NOTE : the worker with gpu=0 will do logging
-    if args.multiprocessing:
-        dist.init_process_group(backend='nccl', init_method='env://',
-                                world_size=args.num_gpus, rank=gpu)
-    else:
-        dist.init_process_group(backend='nccl', init_method=f'tcp://localhost:{args.tcp_port}',
-                              world_size=args.num_gpus, rank=gpu)
-    torch.cuda.set_device(gpu)
 
+    # if args.multiprocessing:
+    #     print("Init_process_group_multi")
+    #     dist.init_process_group(backend='nccl', init_method='env://',
+    #                             world_size=args.num_gpus, rank=gpu)
+    # else:
+    #     print("Init_process_group")
+    #     dist.init_process_group(backend='nccl', init_method=f'tcp://localhost:{args.tcp_port}',
+    #                           world_size=args.num_gpus, rank=gpu)
+        
+    # torch.cuda.set_device(gpu)
+
+    print("PREPARING DATASET IN MAIN")
     # Prepare dataset
     data_train = get_data(args, 'train')
     data_val = get_data(args, 'val')
+    print("Lenght of data_train:", len(data_train))
 
     # data_train = data(args, 'train')
     # data_val = data(args, 'val')
-
+    print("Line 89 in main.")
+    print("Number of gpu:", args.num_gpus)
     sampler_train = DistributedSampler(
         data_train, num_replicas=args.num_gpus, rank=gpu)
 
     batch_size = args.batch_size
 
     loader_train = DataLoader(
-        dataset=data_train, batch_size=batch_size, shuffle=False,
-        num_workers=args.num_threads, pin_memory=True, sampler=sampler_train,
+        dataset=data_train, batch_size=1, shuffle=False,
+        num_workers=args.num_threads, pin_memory=True, # sampler=sampler_train,
         drop_last=True)
     loader_val = DataLoader(
         dataset=data_val, batch_size=1, shuffle=False,
@@ -105,9 +112,20 @@ def train(gpu, args):
     # Network
     if args.model == 'OGNIDC':
         net = OGNIDC(args)
+        # For running the first demo code, November 17
+        # for param in net.parameters():
+        #     param.requires_grad = False
+        # i = 0 
+        # for name, param in net.named_parameters():
+        #     if i != 0: 
+        #         param.requires_grad = False
+        #     i += 1
     else:
         raise TypeError(args.model, ['OGNIDC', ])
-    net.cuda(gpu)
+    # net.cuda(gpu)
+
+    print("Number of parameters:", sum(p.numel() for p in net.parameters()))
+    print("Number of trained parameters:", sum(p.numel() for p in net.parameters() if p.requires_grad))
 
     # if gpu == 0:
     if args.pretrain is not None:
@@ -127,12 +145,12 @@ def train(gpu, args):
     else:
         raise NotImplementedError
 
-    loss.cuda(gpu)
+    # loss.cuda(gpu)
 
     # Optimizer
     optimizer, scheduler = utility.make_optimizer_scheduler(args, net, len(loader_train))
-    net = apex.parallel.convert_syncbn_model(net)
-    net, optimizer = amp.initialize(net, optimizer, opt_level=args.opt_level, verbosity=0)
+    # net = apex.parallel.convert_syncbn_model(net)
+    # net, optimizer = amp.initialize(net, optimizer, opt_level=args.opt_level, verbosity=0)
 
     # if gpu == 0:
     if args.pretrain is not None:
@@ -143,7 +161,7 @@ def train(gpu, args):
                 scheduler.load_state_dict(checkpoint['scheduler'])
                 scheduler.milestones = Counter(args.milestones)
 
-                amp.load_state_dict(checkpoint['amp'])
+                # amp.load_state_dict(checkpoint['amp'])
 
                 print('Resume optimizer, scheduler and amp '
                       'from : {}'.format(args.pretrain))
@@ -153,7 +171,7 @@ def train(gpu, args):
 
         del checkpoint
 
-    net = DDP(net)
+    # net = DDP(net)
 
     metric = DCMetric(args)
     best_val_rmse = 1e10
@@ -188,7 +206,7 @@ def train(gpu, args):
         net.train()
 
         sampler_train.set_epoch(epoch)
-
+        print("------------\nGPU:", gpu)
         if gpu == 0:
             current_time = time.strftime('%y%m%d@%H:%M:%S')
 
@@ -202,6 +220,9 @@ def train(gpu, args):
 
         num_sample = len(loader_train) * loader_train.batch_size * args.num_gpus
 
+        print("Number of samples:", num_sample)
+        print("Length of dataloader:", len(loader_train))
+
         if gpu == 0:
             pbar = tqdm(total=num_sample)
             log_cnt = 0.0
@@ -209,9 +230,9 @@ def train(gpu, args):
 
         init_seed(seed=int(time.time()))
         for batch, sample in enumerate(loader_train):
-            sample = {key: val.cuda(gpu) for key, val in sample.items()
-                      if val is not None}
-
+            # sample = {key: val.cuda(gpu) for key, val in sample.items()
+            #           if val is not None}
+            print("------------\nGPU:", gpu)
             if epoch == 1 and args.warm_up:
                 warm_up_cnt += 1
 
@@ -222,21 +243,28 @@ def train(gpu, args):
 
             optimizer.zero_grad()
 
+            print("------------------------\nINPUT TO THE MODEL.")
             output = net(sample)
 
             # visualization
             # writer_train.save(epoch, batch, sample, output)
             # assert False
             
+
+            print("----------------\nCALCULATING LOSS.")
             loss_sum, loss_val = loss(sample, output)
 
             # Divide by batch size
             loss_sum = loss_sum / loader_train.batch_size
             loss_val = loss_val / loader_train.batch_size
 
-            with amp.scale_loss(loss_sum, optimizer) as scaled_loss:
-                scaled_loss.backward()
+            # with amp.scale_loss(loss_sum, optimizer) as scaled_loss:
+            #     scaled_loss.backward()
 
+            scaler = amp.GradScaler()
+            scaler.scale(loss_sum).backward()
+
+            print("-----------------\nUPDATE PARAMETERS.")
             torch.nn.utils.clip_grad_norm_(net.parameters(), args.grad_clip)
             optimizer.step()
 
@@ -279,7 +307,7 @@ def train(gpu, args):
             if args.save_full or epoch == args.epochs:
                 state = {
                     'epoch': epoch,
-                    'net': net.module.state_dict(),
+                    'net': net.state_dict(),
                     'optimizer': optimizer.state_dict(),
                     'scheduler': scheduler.state_dict(),
                     'amp': amp.state_dict(),
@@ -288,7 +316,7 @@ def train(gpu, args):
             else:
                 state = {
                     'epoch': epoch,
-                    'net': net.module.state_dict(),
+                    'net': net.state_dict(),
                     'args': args
                 }
 
@@ -313,8 +341,8 @@ def train(gpu, args):
 
         init_seed()
         for batch, sample in enumerate(loader_val):
-            sample = {key: val.cuda(gpu) for key, val in sample.items()
-                      if val is not None}
+            # sample = {key: val.cuda(gpu) for key, val in sample.items()
+            #           if val is not None}
 
             with torch.no_grad():
                 output = net(sample)
@@ -377,7 +405,7 @@ def test(args):
         net = OGNIDC(args)
     else:
         raise TypeError(args.model, ['OGNIDC', ])
-    net.cuda()
+    # net.cuda()
 
     if args.pretrain is not None:
         assert os.path.exists(args.pretrain), \
@@ -396,7 +424,7 @@ def test(args):
             raise KeyError
         print('Checkpoint loaded from {}!'.format(args.pretrain))
 
-    net = nn.DataParallel(net)
+    # net = nn.DataParallel(net)
 
     metric = DCMetric(args)
 
@@ -418,8 +446,9 @@ def test(args):
 
     init_seed()
     for batch, sample in enumerate(loader_test):
-        sample = {key: val.cuda() for key, val in sample.items()
-                  if val is not None}
+        print("Inside loop")
+        # sample = {key: val.cuda() for key, val in sample.items()
+        #           if val is not None}
 
         rgb = sample['rgb']
         dep = sample['dep']
@@ -478,7 +507,7 @@ def test(args):
         writer_test.add(None, metric_val)
 
         # Save data for analysis
-        writer_test.save(args.epochs, batch, sample, output)
+        # writer_test.save(args.epochs, batch, sample, output)
 
         current_time = time.strftime('%y%m%d@%H:%M:%S')
         error_str = '{} | Test'.format(current_time)

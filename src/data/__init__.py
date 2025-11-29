@@ -67,6 +67,8 @@ def get(args, mode):
         dataset_name = 'MultiDataset'
 
     module = import_module(module_name)
+    print("DATASET NAME", data_name)
+    print("MODULE", module)
     return getattr(module, dataset_name)(args, mode=mode)
 
 

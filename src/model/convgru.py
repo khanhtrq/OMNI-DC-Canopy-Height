@@ -248,7 +248,8 @@ class BasicUpdateBlock(nn.Module):
             weights_input = self.inputs_weights_head(net)
             weights_input = weights_input.reshape(B, self.resolution, 1, 1).repeat(1, 1, H, W)
         else:
-            weights_input = torch.tensor(([1.0] + [0.0] * (self.resolution-1)), device='cuda')
+            # weights_input = torch.tensor(([1.0] + [0.0] * (self.resolution-1)), device='cuda')
+            weights_input = torch.tensor(([1.0] + [0.0] * (self.resolution-1)))
             weights_input = weights_input.reshape(1, self.resolution, 1, 1).repeat(B, 1, 1, 1)
 
         if self.mask_r > 1:
