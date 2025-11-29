@@ -122,6 +122,9 @@ def train(gpu, args):
         #     i += 1
     else:
         raise TypeError(args.model, ['OGNIDC', ])
+    
+    if torch.cuda.is_available():
+        net.cuda(gpu)
     # net.cuda(gpu)
 
     print("Number of parameters:", sum(p.numel() for p in net.parameters()))
@@ -230,8 +233,9 @@ def train(gpu, args):
 
         init_seed(seed=int(time.time()))
         for batch, sample in enumerate(loader_train):
-            # sample = {key: val.cuda(gpu) for key, val in sample.items()
-            #           if val is not None}
+            if torch.cuda.is_available():
+                sample = {key: val.cuda(gpu) for key, val in sample.items()
+                          if val is not None}
             print("------------\nGPU:", gpu)
             if epoch == 1 and args.warm_up:
                 warm_up_cnt += 1
@@ -341,8 +345,9 @@ def train(gpu, args):
 
         init_seed()
         for batch, sample in enumerate(loader_val):
-            # sample = {key: val.cuda(gpu) for key, val in sample.items()
-            #           if val is not None}
+            if torch.cuda.is_available():
+                sample = {key: val.cuda(gpu) for key, val in sample.items()
+                          if val is not None}
 
             with torch.no_grad():
                 output = net(sample)
@@ -405,6 +410,9 @@ def test(args):
         net = OGNIDC(args)
     else:
         raise TypeError(args.model, ['OGNIDC', ])
+    
+    if torch.cuda.is_available():
+        net.cuda()
     # net.cuda()
 
     if args.pretrain is not None:
@@ -447,8 +455,9 @@ def test(args):
     init_seed()
     for batch, sample in enumerate(loader_test):
         print("Inside loop")
-        # sample = {key: val.cuda() for key, val in sample.items()
-        #           if val is not None}
+        if torch.cuda.is_available():
+            sample = {key: val.cuda() for key, val in sample.items()
+                      if val is not None}
 
         rgb = sample['rgb']
         dep = sample['dep']

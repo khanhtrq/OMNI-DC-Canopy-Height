@@ -18,10 +18,10 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
-# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
-# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
+# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
+gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
+sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
 
 
 class iBims_Draft(BaseDataset):
