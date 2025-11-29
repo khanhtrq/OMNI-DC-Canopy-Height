@@ -237,7 +237,7 @@ def train(gpu, args):
         init_seed(seed=int(time.time()))
         for batch, sample in enumerate(loader_train):
             if torch.cuda.is_available():
-                sample = {key: val.to(device) for key, val in sample.items()
+                sample = {key: val.cuda() for key, val in sample.items()
                           if val is not None}
             print("------------\nGPU:", gpu)
             if epoch == 1 and args.warm_up:
@@ -251,6 +251,10 @@ def train(gpu, args):
             optimizer.zero_grad()
 
             print("------------------------\nINPUT TO THE MODEL.")
+            print("Model device:", next(net.parameters()).device)
+            for key, val in sample.items():
+                print("Sample device:", sample[key].device)
+                break
             output = net(sample)
 
             # visualization
