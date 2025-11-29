@@ -254,7 +254,6 @@ def train(gpu, args):
             print("Model device:", next(net.parameters()).device)
             for key, val in sample.items():
                 print("Sample device:", sample[key].device)
-                break
             output = net(sample)
 
             # visualization
