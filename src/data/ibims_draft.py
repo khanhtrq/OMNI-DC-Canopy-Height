@@ -20,6 +20,8 @@ split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
 gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
 sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
+# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
+# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
 
 
 class iBims_Draft(BaseDataset):
@@ -32,14 +34,14 @@ class iBims_Draft(BaseDataset):
         self.height = 480
         self.width = 640
 
-        print('Loading iBims-1...')
-        with open(split_txt, "r") as f:
-            self.filenames = [
-                s.split() for s in f.readlines()
-            ]
-        print("LOADING DONE.")
-        print(self.filenames)
-        print(len(self.filenames))
+        # print('Loading iBims-1...')
+        # with open(split_txt, "r") as f:
+        #     self.filenames = [
+        #         s.split() for s in f.readlines()
+        #     ]
+        # print("LOADING DONE.")
+        # print(self.filenames)
+        # print(len(self.filenames))
 
     def __len__(self):
         # return 32
