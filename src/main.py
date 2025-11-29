@@ -38,6 +38,9 @@ import torch.cuda.amp as amp
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 # Minimize randomness
 def init_seed(seed=None):
     if seed is None:
@@ -124,7 +127,7 @@ def train(gpu, args):
         raise TypeError(args.model, ['OGNIDC', ])
     
     if torch.cuda.is_available():
-        net.cuda(gpu)
+        net = net.to(device)
     # net.cuda(gpu)
 
     print("Number of parameters:", sum(p.numel() for p in net.parameters()))
@@ -234,7 +237,7 @@ def train(gpu, args):
         init_seed(seed=int(time.time()))
         for batch, sample in enumerate(loader_train):
             if torch.cuda.is_available():
-                sample = {key: val.cuda(gpu) for key, val in sample.items()
+                sample = {key: val.to(device) for key, val in sample.items()
                           if val is not None}
             print("------------\nGPU:", gpu)
             if epoch == 1 and args.warm_up:
@@ -412,7 +415,7 @@ def test(args):
         raise TypeError(args.model, ['OGNIDC', ])
     
     if torch.cuda.is_available():
-        net.cuda()
+        net = net.to(device)
     # net.cuda()
 
     if args.pretrain is not None:
@@ -456,7 +459,7 @@ def test(args):
     for batch, sample in enumerate(loader_test):
         print("Inside loop")
         if torch.cuda.is_available():
-            sample = {key: val.cuda() for key, val in sample.items()
+            sample = {key: val.to(device) for key, val in sample.items()
                       if val is not None}
 
         rgb = sample['rgb']
