@@ -59,7 +59,7 @@ if __name__ == '__main__':
     # print(dataset[0])
     # print("TRAINING BEGINS")
 
-    # train(0, args)
+    train(0, args)
     test(args)
     
 
