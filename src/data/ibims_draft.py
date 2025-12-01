@@ -18,10 +18,10 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
-# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
-# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
+# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
+gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
+sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
 
 
 class iBims_Draft(BaseDataset):
@@ -56,10 +56,10 @@ class iBims_Draft(BaseDataset):
 
         gedi = gedi.astype(np.float32)
         rgb = rgb.astype(np.float32)
-        print(rgb.dtype)
+        # print(rgb.dtype)
 
-        print("Gedi and RGB shapes:")
-        print(gedi.shape, rgb.shape)
+        # print("Gedi and RGB shapes:")
+        # print(gedi.shape, rgb.shape)
 
 
         K = torch.eye(3)
