@@ -83,8 +83,9 @@ def train(gpu, args):
     #     print("Init_process_group")
     #     dist.init_process_group(backend='nccl', init_method=f'tcp://localhost:{args.tcp_port}',
     #                           world_size=args.num_gpus, rank=gpu)
-        
-    torch.cuda.set_device(gpu)
+    
+    if torch.cuda.is_available():
+        torch.cuda.set_device(gpu)
 
     print("PREPARING DATASET IN MAIN")
     # Prepare dataset
