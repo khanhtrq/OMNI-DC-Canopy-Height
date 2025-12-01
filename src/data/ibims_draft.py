@@ -18,10 +18,10 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
-# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
-# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
+# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
+gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
+sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
 
 
 class iBims_Draft(BaseDataset):
@@ -44,7 +44,7 @@ class iBims_Draft(BaseDataset):
         # print(len(self.filenames))
 
     def __len__(self):
-        # return 32
+        return 32
         return len(os.listdir(gedi_folder))
     
     def __getitem__(self, idx):
@@ -56,6 +56,8 @@ class iBims_Draft(BaseDataset):
 
         gedi = gedi.astype(np.float32)
         rgb = rgb.astype(np.float32)
+
+        print(f"{rgb.max()}, {rgb.min()}")
         # print(rgb.dtype)
 
         # print("Gedi and RGB shapes:")
@@ -80,6 +82,7 @@ class iBims_Draft(BaseDataset):
 
         rgb_np_raw = t_rgb_np_raw(rgb)
         rgb = t_rgb(rgb)
+        print(f"{rgb.max()}, {rgb.min()}")
 
         dep = t_dep(gedi)
 

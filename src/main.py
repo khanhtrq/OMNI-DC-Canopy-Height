@@ -312,7 +312,7 @@ def train(gpu, args):
                     'net': net.state_dict(),
                     'optimizer': optimizer.state_dict(),
                     'scheduler': scheduler.state_dict(),
-                    'amp': amp.state_dict(),
+                    'amp': scaler.state_dict(),
                     'args': args
                 }
             else:
