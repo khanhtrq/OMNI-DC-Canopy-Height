@@ -255,6 +255,7 @@ class OGNIDC(nn.Module, PyTorchModelHubMixin):
             print("OMNI-DC confidence_input device:", confidence_input.device)
             print("OMNI-DC weights_input device:", weights_input.device)
             print("weights_depth_grad device:", weights_depth_grad.device)
+            print(type(self.update_block))
 
             # the optimization layer use the prediction from last round to accelerate convergence
             log_depth_pred, b_init = DepthGradOptimLayer.apply(log_depth_grad_pred,
