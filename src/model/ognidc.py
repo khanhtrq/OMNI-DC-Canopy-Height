@@ -252,6 +252,9 @@ class OGNIDC(nn.Module, PyTorchModelHubMixin):
             thres = self.args.optim_layer_input_clamp
             log_depth_grad_pred = torch.clamp(log_depth_grad_pred, min=-thres, max=thres)
 
+            print("OMNI-DC confidence_input device:", confidence_input.device())
+            print("OMNI-DC weights_input device:", weights_input.device())
+            
             # the optimization layer use the prediction from last round to accelerate convergence
             log_depth_pred, b_init = DepthGradOptimLayer.apply(log_depth_grad_pred,
                                                                dep_integrator,
@@ -264,8 +267,6 @@ class OGNIDC(nn.Module, PyTorchModelHubMixin):
                                                                self.args.integration_alpha,
                                                                1e-5, 5000)
             
-            print("OMNI-DC confidence_input device:", confidence_input.device())
-            print("OMNI-DC weights_input device:", weights_input.device())
 
             log_depth_grad_predictions.append(log_depth_grad_pred)
             confidence_predictions.append(weights_depth_grad)
