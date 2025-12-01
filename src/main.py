@@ -87,16 +87,12 @@ def train(gpu, args):
     if torch.cuda.is_available():
         torch.cuda.set_device(gpu)
 
-    print("PREPARING DATASET IN MAIN")
     # Prepare dataset
     data_train = get_data(args, 'train')
     data_val = get_data(args, 'val')
-    print("Lenght of data_train:", len(data_train))
 
     # data_train = data(args, 'train')
     # data_val = data(args, 'val')
-    print("Line 89 in main.")
-    print("Number of gpu:", args.num_gpus)
     sampler_train = DistributedSampler(
         data_train, num_replicas=args.num_gpus, rank=gpu)
 
@@ -131,8 +127,8 @@ def train(gpu, args):
         net = net.to(device)
     # net.cuda(gpu)
 
-    print("Number of parameters:", sum(p.numel() for p in net.parameters()))
-    print("Number of trained parameters:", sum(p.numel() for p in net.parameters() if p.requires_grad))
+    # print("Number of parameters:", sum(p.numel() for p in net.parameters()))
+    # print("Number of trained parameters:", sum(p.numel() for p in net.parameters() if p.requires_grad))
 
     # if gpu == 0:
     if args.pretrain is not None:
@@ -213,7 +209,7 @@ def train(gpu, args):
         net.train()
 
         sampler_train.set_epoch(epoch)
-        print("------------\nGPU:", gpu)
+        # print("------------\nGPU:", gpu)
         if gpu == 0:
             current_time = time.strftime('%y%m%d@%H:%M:%S')
 
@@ -227,8 +223,8 @@ def train(gpu, args):
 
         num_sample = len(loader_train) * loader_train.batch_size * args.num_gpus
 
-        print("Number of samples:", num_sample)
-        print("Length of dataloader:", len(loader_train))
+        # print("Number of samples:", num_sample)
+        # print("Length of dataloader:", len(loader_train))
 
         if gpu == 0:
             pbar = tqdm(total=num_sample)
@@ -240,7 +236,6 @@ def train(gpu, args):
             if torch.cuda.is_available():
                 sample = {key: val.cuda() for key, val in sample.items()
                           if val is not None}
-            print("------------\nGPU:", gpu)
             if epoch == 1 and args.warm_up:
                 warm_up_cnt += 1
 
@@ -251,10 +246,6 @@ def train(gpu, args):
 
             optimizer.zero_grad()
 
-            print("------------------------\nINPUT TO THE MODEL.")
-            print("Model device:", next(net.parameters()).device)
-            for key, val in sample.items():
-                print("Sample device:", sample[key].device)
             output = net(sample)
 
             # visualization
@@ -262,7 +253,7 @@ def train(gpu, args):
             # assert False
             
 
-            print("----------------\nCALCULATING LOSS.")
+            # print("----------------\nCALCULATING LOSS.")
             loss_sum, loss_val = loss(sample, output)
 
             # Divide by batch size
@@ -275,7 +266,7 @@ def train(gpu, args):
             scaler = amp.GradScaler()
             scaler.scale(loss_sum).backward()
 
-            print("-----------------\nUPDATE PARAMETERS.")
+            # print("-----------------\nUPDATE PARAMETERS.")
             torch.nn.utils.clip_grad_norm_(net.parameters(), args.grad_clip)
             optimizer.step()
 
@@ -461,7 +452,6 @@ def test(args):
 
     init_seed()
     for batch, sample in enumerate(loader_test):
-        print("Inside loop")
         if torch.cuda.is_available():
             sample = {key: val.to(device) for key, val in sample.items()
                       if val is not None}

@@ -108,7 +108,7 @@ class OGNIDC(nn.Module, PyTorchModelHubMixin):
         return log_depth_init, log_depth_grad_init
 
     def forward(self, sample):
-        print("Forwad in OGNI-DC")
+        # print("Forwad in OGNI-DC")
         rgb = sample['rgb']
         dep = torch.clone(sample['dep'])
         dep_original = torch.clone(dep)
@@ -199,13 +199,13 @@ class OGNIDC(nn.Module, PyTorchModelHubMixin):
         else:
             dep_network_input = dep_network_input
 
-        print("Begninning backbone.")
+        # print("Begninning backbone.")
         # backbone
         assert self.args.pred_context_feature
         _, spn_guide, spn_confidence, context, confidence_input, confidence_output = self.backbone(rgb,
                                                                                                    dep_network_input,
                                                                                                    depth_pattern)
-        print("End backbone.")
+        # print("End backbone.")
         if confidence_input is None:
             confidence_input = torch.ones_like(dep)  # B x 1 x H x W
 
@@ -252,10 +252,10 @@ class OGNIDC(nn.Module, PyTorchModelHubMixin):
             thres = self.args.optim_layer_input_clamp
             log_depth_grad_pred = torch.clamp(log_depth_grad_pred, min=-thres, max=thres)
 
-            print("OMNI-DC confidence_input device:", confidence_input.device)
-            print("OMNI-DC weights_input device:", weights_input.device)
-            print("weights_depth_grad device:", weights_depth_grad.device)
-            print(type(self.update_block))
+            # print("OMNI-DC confidence_input device:", confidence_input.device)
+            # print("OMNI-DC weights_input device:", weights_input.device)
+            # print("weights_depth_grad device:", weights_depth_grad.device)
+            # print(type(self.update_block))
 
             # the optimization layer use the prediction from last round to accelerate convergence
             log_depth_pred, b_init = DepthGradOptimLayer.apply(log_depth_grad_pred,
