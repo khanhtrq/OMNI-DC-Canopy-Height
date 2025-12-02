@@ -510,6 +510,8 @@ def test(args):
 
         metric_val = metric.evaluate(sample, output, 'test')
 
+
+
         writer_test.add(None, metric_val)
 
         # Save data for analysis

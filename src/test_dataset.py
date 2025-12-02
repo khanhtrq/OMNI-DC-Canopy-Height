@@ -53,15 +53,15 @@ if __name__ == '__main__':
 
     net = OGNIDC(args)
     print("Getting sentinel data:")
-    for i in range(10):
-        dataset[i]
-    print(len(dataset))
+    # for i in range(10):
+    #     dataset[i]
+    # print(len(dataset))
 
 
     # print(dataset[0])
     # print("TRAINING BEGINS")
 
-    train(0, args)
+    # train(0, args)
     test(args)
     
 

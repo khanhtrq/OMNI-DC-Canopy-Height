@@ -34,6 +34,11 @@ class iBims_Draft(BaseDataset):
         self.height = 480
         self.width = 640
 
+        self.sen_max = [18192, 19056, 20224]
+        self.sen_min = [0, 0, 0]
+        self.sen_mean = [0.08068061134137483, 0.08042594856552854, 0.06597259674602372]
+        self.sen_std = [0.018680129025066675, 0.012111958307734488, 0.008596667499397656]
+
         # print('Loading iBims-1...')
         # with open(split_txt, "r") as f:
         #     self.filenames = [
@@ -75,7 +80,7 @@ class iBims_Draft(BaseDataset):
 
         # print("Gedi and RGB shapes:")
         # print(gedi.shape, rgb.shape)
-
+        sen_max = []
 
         K = torch.eye(3)
 
@@ -98,7 +103,7 @@ class iBims_Draft(BaseDataset):
         # print(f"{rgb.max()}, {rgb.min()}")
 
         dep = t_dep(gedi)
-
+        # print("Max depth:", dep.max())
         dep_sp, pattern_id = self.get_sparse_depth(dep,
                                                    self.args.val_depth_pattern,
                                                    match_density=True,
