@@ -51,18 +51,18 @@ class iBims_Draft(BaseDataset):
         ratio_train = 0.8 
 
         rng = np.random.default_rng(seed=42)   # fixed seed
-        file_idx_all = rng.permutation(len(self)) 
+        file_idx_all = rng.permutation(len(os.listdir(gedi_folder))) 
 
         if self.mode == "train":
-            file_idx_train = file_idx_all[:int(ratio_train * len(self))]
+            file_idx_train = file_idx_all[:int(ratio_train * len(os.listdir(gedi_folder)))]
             self.file_idx = file_idx_train
         elif self.mode == "test" or self.mode == "val":
-            file_idx_test = file_idx_all[int(ratio_train * len(self)):]
+            file_idx_test = file_idx_all[int(ratio_train * len(os.listdir(gedi_folder))):]
             self.file_idx = file_idx_test
 
     def __len__(self):
         # return 32
-        return len(os.listdir(gedi_folder))
+        return len(self.file_idx)
     
     def __getitem__(self, idx):
         input_file_idx = self.file_idx[idx]
