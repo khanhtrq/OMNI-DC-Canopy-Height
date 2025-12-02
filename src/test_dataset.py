@@ -33,7 +33,7 @@ if __name__ == '__main__':
     args.train_data_name = "iBims_Draft"
     args.test_data_name = "iBims_Draft"
     args.val_data_name = "iBims_Draft"
-    args.epochs = 5
+    args.epochs = 1
     args.batch_size = 32
     args.val_depth_pattern = "3000"
     
