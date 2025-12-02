@@ -35,6 +35,7 @@ if __name__ == '__main__':
     args.val_data_name = "iBims_Draft"
     args.epochs = 1
     args.batch_size = 32
+    args.val_depth_pattern = "3000"
     
     data_name = args.train_data_name
     module_name = 'data.' + data_name.lower()
@@ -52,7 +53,8 @@ if __name__ == '__main__':
 
     net = OGNIDC(args)
     print("Getting sentinel data:")
-    dataset[0]
+    for i in range(10):
+        dataset[i]
     print(len(dataset))
 
 

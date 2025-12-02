@@ -18,10 +18,10 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
-# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
-# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
+# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
+gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
+sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
 
 
 class iBims_Draft(BaseDataset):
@@ -42,14 +42,27 @@ class iBims_Draft(BaseDataset):
         # print("LOADING DONE.")
         # print(self.filenames)
         # print(len(self.filenames))
+        
+        ratio_train = 0.8 
+
+        rng = np.random.default_rng(seed=42)   # fixed seed
+        file_idx_all = rng.permutation(len(self)) 
+
+        if self.mode == "train":
+            file_idx_train = file_idx_all[:int(ratio_train * len(self))]
+            self.file_idx = file_idx_train
+        elif self.mode == "test" or self.mode == "val":
+            file_idx_test = file_idx_all[int(ratio_train * len(self)):]
+            self.file_idx = file_idx_test
 
     def __len__(self):
-        return 32
+        # return 32
         return len(os.listdir(gedi_folder))
     
     def __getitem__(self, idx):
-        gedi_file = os.path.join(gedi_folder, f"{idx}.npy")
-        sentinel_file = os.path.join(sentinel_folder, f"{idx}.npy")
+        input_file_idx = self.file_idx[idx]
+        gedi_file = os.path.join(gedi_folder, f"{input_file_idx}.npy")
+        sentinel_file = os.path.join(sentinel_folder, f"{input_file_idx}.npy")
 
         gedi = np.load(gedi_file)
         rgb = np.load(sentinel_file)
@@ -57,7 +70,7 @@ class iBims_Draft(BaseDataset):
         gedi = gedi.astype(np.float32)
         rgb = rgb.astype(np.float32)
 
-        print(f"{rgb.max()}, {rgb.min()}")
+        # print(f"{rgb.max()}, {rgb.min()}")
         # print(rgb.dtype)
 
         # print("Gedi and RGB shapes:")
@@ -82,7 +95,7 @@ class iBims_Draft(BaseDataset):
 
         rgb_np_raw = t_rgb_np_raw(rgb)
         rgb = t_rgb(rgb)
-        print(f"{rgb.max()}, {rgb.min()}")
+        # print(f"{rgb.max()}, {rgb.min()}")
 
         dep = t_dep(gedi)
 
@@ -92,6 +105,9 @@ class iBims_Draft(BaseDataset):
                                                    rgb_np=rgb_np_raw,
                                                    input_noise=self.args.val_depth_noise)
 
+        # print("Shape of sparse depth:", dep_sp.shape)
+        # print("Number of points in sparse depth:", (dep_sp > 0).sum().item())
+        # print("Number of points in ground truth depth:", (dep > 0).sum().item())
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
 
         return output

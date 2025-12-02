@@ -191,11 +191,13 @@ class BaseDataset(Dataset):
         dep = torch.clone(dep)
 
         channel, height, width = dep.shape
+        # print("Depth shape:", dep.shape)
 
         assert channel == 1
 
         idx_nnz = torch.nonzero(dep.view(-1) > 0.0001, as_tuple=False)
         num_idx = len(idx_nnz)
+        # print("Num_idx:", num_idx)
 
         # the patterns can have format "0.8*100~2000+0.2*sift"
         all_weights = []
@@ -208,7 +210,10 @@ class BaseDataset(Dataset):
 
             all_weights.append(weight)
             all_patterns.append(pattern)
+        
+        # print("All partern:", all_patterns)
         pattern = np.random.choice(all_patterns, p=all_weights)
+        # print("Pattern selected:", pattern)
         # further parse if needed
         if '~' in pattern:
             num_start, num_end = pattern.split('~')
@@ -218,6 +223,7 @@ class BaseDataset(Dataset):
 
         if pattern.isdigit():
             num_sample = int(pattern)
+            # print("Number of samples:", num_sample)
 
             if match_density:
                 # we want a uniform density
@@ -231,6 +237,9 @@ class BaseDataset(Dataset):
             mask = torch.zeros((channel * height * width))
             mask[idx_nnz] = 1.0
             mask = mask.view((channel, height, width))
+
+            # print("Mask shape:", mask.shape)
+            # print("Mask sum:", mask.sum().item())
 
             dep = add_noise(dep, input_noise)
             dep_sp = dep * mask.type_as(dep)
