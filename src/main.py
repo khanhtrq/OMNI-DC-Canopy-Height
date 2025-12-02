@@ -99,11 +99,11 @@ def train(gpu, args):
     batch_size = args.batch_size
 
     loader_train = DataLoader(
-        dataset=data_train, batch_size=1, shuffle=False,
+        dataset=data_train, batch_size=args.batch_size, shuffle=False,
         num_workers=args.num_threads, pin_memory=True, # sampler=sampler_train,
         drop_last=True)
     loader_val = DataLoader(
-        dataset=data_val, batch_size=1, shuffle=False,
+        dataset=data_val, batch_size=args.batch_size, shuffle=False,
         num_workers=4, drop_last=False)
 
     if gpu == 0:

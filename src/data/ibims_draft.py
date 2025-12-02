@@ -75,6 +75,8 @@ class iBims_Draft(BaseDataset):
         gedi = gedi.astype(np.float32)
         rgb = rgb.astype(np.float32)
 
+        # print("Max in raw gedi:", np.nanmax(gedi))
+
         # print(f"{rgb.max()}, {rgb.min()}")
         # print(rgb.dtype)
 
@@ -103,7 +105,7 @@ class iBims_Draft(BaseDataset):
         # print(f"{rgb.max()}, {rgb.min()}")
 
         dep = t_dep(gedi)
-        # print("Max depth:", dep.max())
+
         dep_sp, pattern_id = self.get_sparse_depth(dep,
                                                    self.args.val_depth_pattern,
                                                    match_density=True,
