@@ -106,15 +106,33 @@ class iBims_Draft(BaseDataset):
 
         dep = t_dep(gedi)
 
-        dep_sp, pattern_id = self.get_sparse_depth(dep,
+        dep_sp, pattern_id, mask_sp = self.get_sparse_depth(dep,
                                                    self.args.val_depth_pattern,
                                                    match_density=True,
                                                    rgb_np=rgb_np_raw,
-                                                   input_noise=self.args.val_depth_noise)
+                                                   input_noise=self.args.val_depth_noise,
+                                                   return_mask= True)
 
         # print("Shape of sparse depth:", dep_sp.shape)
         # print("Number of points in sparse depth:", (dep_sp > 0).sum().item())
         # print("Number of points in ground truth depth:", (dep > 0).sum().item())
+        # print("Type of sparse mask:", mask_sp.dtype)
+        # print("Number of points in sparse mask:", mask_sp.sum().item())
+
+        dep_ex_sp = dep * (~mask_sp.to(torch.bool)).type_as(dep)
+
+        # print("Number of points depth exclusive sparse:", (dep_ex_sp > 0).sum().item())
+        # print("Max in depth exclusive sparse:", np.nanmax(dep_ex_sp.numpy()))
+        # print("Max in depth sparse:", np.nanmax(dep_sp.numpy()))
+        # print("Max all:", np.nanmax(dep.numpy()))
+
+        # Return ground truth depth exclusive sparse points for evaluation
+        if self.mode == "test" or self.mode == "val":
+            dep = dep_ex_sp
+
+        # print("Number of points after excluding points in sparse depth:", (dep > 0).sum().item())
+           
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
+        
 
         return output

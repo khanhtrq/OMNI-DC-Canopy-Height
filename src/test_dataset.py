@@ -47,7 +47,7 @@ if __name__ == '__main__':
     print(module)
 
     dataset = getattr(module, dataset_name)(args, mode="test")
-    dataset = getattr(module, dataset_name)(args, mode="train")
+    # dataset = getattr(module, dataset_name)(args, mode="train")
 
     data_train = get_data(args, 'train')
 
@@ -61,7 +61,8 @@ if __name__ == '__main__':
     # print(dataset[0])
     # print("TRAINING BEGINS")
 
-    train(0, args)
+    # train(0, args)
+    args.pretrain = "/kaggle/input/preliminary-omni-dc-canopy-height/experiments251203_035333_trialmodel_best.pt"
     test(args)
     
 

@@ -187,7 +187,8 @@ class BaseDataset(Dataset):
         
         return rgb_final, dep, K, rgb_np_raw
 
-    def get_sparse_depth(self, dep, pattern_raw, match_density=True, rgb_np=None, input_noise="0.0"):
+    def get_sparse_depth(self, dep, pattern_raw, match_density=True, rgb_np=None, input_noise="0.0",
+                         return_mask:bool = False):
         dep = torch.clone(dep)
 
         channel, height, width = dep.shape
@@ -463,7 +464,10 @@ class BaseDataset(Dataset):
 
         dep_sp = torch.nan_to_num(dep_sp)
 
-        return dep_sp, torch.tensor(pattern_id)
+        if return_mask:
+            return dep_sp, torch.tensor(pattern_id), mask
+        else:
+            return dep_sp, torch.tensor(pattern_id)
 
     def refresh_indices(self):
         pass
