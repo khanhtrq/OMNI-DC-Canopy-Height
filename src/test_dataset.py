@@ -61,9 +61,9 @@ if __name__ == '__main__':
     # print(dataset[0])
     # print("TRAINING BEGINS")
 
-    train(0, args)
-    # args.pretrain = "/kaggle/input/preliminary-omni-dc-canopy-height/experiments/251203_035333_trial/model_best.pt"
-    # test(args)
+    # train(0, args)
+    args.pretrain = "/kaggle/input/preliminary-omni-dc-canopy-height/experiments/251203_035333_trial/model_best.pt"
+    test(args)
     
 
     # data_train = get_data(args, "train")
