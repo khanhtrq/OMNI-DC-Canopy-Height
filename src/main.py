@@ -72,7 +72,6 @@ def check_args(args):
 
 
 def train(gpu, args):
-    print("Device:", device)
     # Initialize workers
     # NOTE : the worker with gpu=0 will do logging
 
