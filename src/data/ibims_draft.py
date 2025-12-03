@@ -114,8 +114,8 @@ class iBims_Draft(BaseDataset):
                                                    return_mask= True)
 
         # print("Shape of sparse depth:", dep_sp.shape)
-        print("Number of points in sparse depth:", (dep_sp > 0).sum().item())
-        print("Number of points in ground truth depth:", (dep > 0).sum().item())
+        # print("Number of points in sparse depth:", (dep_sp > 0).sum().item())
+        # print("Number of points in ground truth depth:", (dep > 0).sum().item())
         # print("Type of sparse mask:", mask_sp.dtype)
         # print("Number of points in sparse mask:", mask_sp.sum().item())
 
