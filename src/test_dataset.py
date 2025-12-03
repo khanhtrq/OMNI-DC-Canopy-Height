@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # print("TRAINING BEGINS")
 
     # train(0, args)
-    args.pretrain = "/kaggle/input/preliminary-omni-dc-canopy-height/experiments251203_035333_trialmodel_best.pt"
+    args.pretrain = "/kaggle/input/preliminary-omni-dc-canopy-height/experiments/251203_035333_trial/model_best.pt"
     test(args)
     
 
