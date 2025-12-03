@@ -417,7 +417,7 @@ def test(args):
         assert os.path.exists(args.pretrain), \
             "file not found: {}".format(args.pretrain)
 
-        checkpoint = torch.load(args.pretrain)
+        checkpoint = torch.load(args.pretrain, weights_only=False)
         key_m, key_u = net.load_state_dict(checkpoint['net'], strict=False)
 
         if key_u:
