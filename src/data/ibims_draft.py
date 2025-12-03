@@ -119,7 +119,7 @@ class iBims_Draft(BaseDataset):
         # print("Type of sparse mask:", mask_sp.dtype)
         # print("Number of points in sparse mask:", mask_sp.sum().item())
 
-        dep_ex_sp = dep * (~mask_sp.to(torch.bool)).type_as(dep)
+        dep_ex_sp = dep * (mask_sp.to(torch.bool)).type_as(dep)
         dep_ex_sp[dep_ex_sp == 0] = float('nan')
 
         # print("Number of points depth exclusive sparse:", (dep_ex_sp > 0).sum().item())
