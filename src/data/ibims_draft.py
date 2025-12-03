@@ -128,7 +128,8 @@ class iBims_Draft(BaseDataset):
 
         # Return ground truth depth exclusive sparse points for evaluation
         # if self.mode == "test" or self.mode == "val":
-        #     dep = dep_ex_sp
+
+        dep = dep_ex_sp
 
         # print("Number of points after excluding points in sparse depth:", (dep > 0).sum().item())
            
