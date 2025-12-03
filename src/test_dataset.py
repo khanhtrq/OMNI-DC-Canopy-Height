@@ -35,7 +35,7 @@ if __name__ == '__main__':
     args.val_data_name = "iBims_Draft"
     args.epochs = 50
     args.batch_size = 8
-    args.val_depth_pattern = "3000"
+    args.val_depth_pattern = "30000"
     
     data_name = args.train_data_name
     module_name = 'data.' + data_name.lower()
