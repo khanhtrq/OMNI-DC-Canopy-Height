@@ -30,12 +30,12 @@ class SequentialLoss(BaseLoss):
             confidence_input = output['confidence_input']
             confidence_output = output['confidence_output']
 
-            for d in all_depth_pred:
-                if torch.isnan(d).any():
-                    print("warning: NaN found in predicted depth")
+            # for d in all_depth_pred:
+            #     if torch.isnan(d).any():
+            #         print("warning: NaN found in predicted depth")
 
-            if torch.isnan(gt_depth).any():
-                print("warning: NaN found in gt depth")
+            # if torch.isnan(gt_depth).any():
+            #     print("warning: NaN found in gt depth")
 
             gt_depth = torch.nan_to_num(gt_depth)
 
