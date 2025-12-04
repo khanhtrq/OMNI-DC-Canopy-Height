@@ -88,7 +88,8 @@ class iBims_Draft(BaseDataset):
 
         t_rgb = T.Compose([
             T.ToTensor(),
-            T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+            T.Normalize(mean=[1467.741681522291, 1532.5968758647118, 1334.2297965915839],
+                         std=[339.82890722401294, 230.80547751218842, 173.8590035078182])
         ])
 
         t_rgb_np_raw = T.Compose([
@@ -138,7 +139,15 @@ class iBims_Draft(BaseDataset):
         # print("Nubmer of not nan values in sparse depth:", torch.sum(~torch.isnan(dep_sp)).item())
         # print("Number of not nan values in ground truth depth:", torch.sum(~torch.isnan(dep)).item())
         # print(">0:", (dep > 0).sum().item())
-           
+
+        # print("\n")
+        # print("Max in raw rgb channels:", rgb_np_raw[0].max(), rgb_np_raw[1].max(), rgb_np_raw[2].max())
+        # print("Min in raw rgb channels:", rgb_np_raw[0].min(), rgb_np_raw[1].min(), rgb_np_raw[2].min())
+        # print("Mean in raw rgb channels:", rgb_np_raw[0].mean(), rgb_np_raw[1].mean(), rgb_np_raw[2].mean())
+        # print("\n")
+        # print("Max in rgb channels:", rgb[0].max(), rgb[1].max(), rgb[2].max())
+        # print("Min in rgb channels:", rgb[0].min(), rgb[1].min(), rgb[2].min())
+        # print("Mean in rgb channels:", rgb[0].mean(), rgb[1].mean(), rgb[2].mean())
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
         
 
