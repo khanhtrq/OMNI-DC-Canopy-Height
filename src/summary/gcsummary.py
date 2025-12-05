@@ -125,7 +125,7 @@ class OGNIDCSummary(BaseSummary):
 
         # Un-normalization
         rgb = sample['rgb'].detach().clone()
-        rgb.mul_(self.img_std.type_as(rgb)).add_(self.img_mean.type_as(rgb))
+        # rgb.mul_(self.img_std.type_as(rgb)).add_(self.img_mean.type_as(rgb))
         rgb = rgb.data.cpu().numpy()
 
         pred = output['pred'].detach().data.cpu().numpy()
