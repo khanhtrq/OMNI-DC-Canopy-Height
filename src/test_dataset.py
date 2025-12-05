@@ -36,7 +36,7 @@ if __name__ == '__main__':
     args.epochs = 20
     args.batch_size = 8
     args.val_depth_pattern = "60000"
-    args.lr = 1e-4
+    args.lr = 1e-5
     
     data_name = args.train_data_name
     module_name = 'data.' + data_name.lower()
