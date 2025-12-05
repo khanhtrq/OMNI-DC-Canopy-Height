@@ -33,9 +33,10 @@ if __name__ == '__main__':
     args.train_data_name = "iBims_Draft"
     args.test_data_name = "iBims_Draft"
     args.val_data_name = "iBims_Draft"
-    args.epochs = 100
+    args.epochs = 20
     args.batch_size = 8
     args.val_depth_pattern = "60000"
+    args.lr = 1e-4
     
     data_name = args.train_data_name
     module_name = 'data.' + data_name.lower()
@@ -61,9 +62,9 @@ if __name__ == '__main__':
     # print(dataset[0])
     # print("TRAINING BEGINS")
 
-    train(0, args)
+    # train(0, args)
     # args.pretrain = "/kaggle/input/preliminary-omni-dc-canopy-height/experiments/251203_035333_trial/model_best.pt"
-    # test(args)
+    test(args)
     
 
     # data_train = get_data(args, "train")
