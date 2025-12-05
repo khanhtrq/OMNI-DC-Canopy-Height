@@ -148,6 +148,8 @@ class iBims_Draft(BaseDataset):
         # print("Max in rgb channels:", rgb[0].max(), rgb[1].max(), rgb[2].max())
         # print("Min in rgb channels:", rgb[0].min(), rgb[1].min(), rgb[2].min())
         # print("Mean in rgb channels:", rgb[0].mean(), rgb[1].mean(), rgb[2].mean())
+
+        rgb = rgb[0:1, :, :]  # only use band 1 (red band)
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
         
 
