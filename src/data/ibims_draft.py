@@ -18,10 +18,10 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
-# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
-# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
+# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
+gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
+sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
 
 
 class iBims_Draft(BaseDataset):
@@ -149,7 +149,7 @@ class iBims_Draft(BaseDataset):
         # print("Min in rgb channels:", rgb[0].min(), rgb[1].min(), rgb[2].min())
         # print("Mean in rgb channels:", rgb[0].mean(), rgb[1].mean(), rgb[2].mean())
 
-        rgb = rgb[0:1, :, :]  # only use band 1 (red band)
+        # rgb = rgb[0:1, :, :]  # only use band 1 (red band)
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
         
 

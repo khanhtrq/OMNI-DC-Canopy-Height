@@ -51,17 +51,17 @@ class Backbone(nn.Module):
 
         # Encoder
         if mode == 'rgbd':
-            self.conv1_rgb = conv_bn_relu(1, 48, kernel=3, stride=1, padding=1,
+            self.conv1_rgb = conv_bn_relu(3, 48, kernel=3, stride=1, padding=1,
                                           bn=False)
             self.conv1_dep = conv_bn_relu(depth_input_channels, 16, kernel=3, stride=1, padding=1,
                                           bn=False)
             self.conv1 = conv_bn_relu(64, 64, kernel=3, stride=1, padding=1,
                                       bn=False)
         elif mode == 'rgb':
-            self.conv1 = conv_bn_relu(1, 64, kernel=3, stride=1, padding=1,
+            self.conv1 = conv_bn_relu(3, 64, kernel=3, stride=1, padding=1,
                                       bn=False)
         elif mode == 'd':
-            self.conv1 = conv_bn_relu(1, 64, kernel=3, stride=1, padding=1,
+            self.conv1 = conv_bn_relu(3, 64, kernel=3, stride=1, padding=1,
                                       bn=False)
         else:
             raise TypeError(mode)
