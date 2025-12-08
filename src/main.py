@@ -128,7 +128,7 @@ def train(gpu, args):
     # net.cuda(gpu)
 
     # print("Number of parameters:", sum(p.numel() for p in net.parameters()))
-    # print("Number of trained parameters:", sum(p.numel() for p in net.parameters() if p.requires_grad))
+    print("Number of trained parameters:", sum(p.numel() for p in net.parameters() if p.requires_grad))
 
     # if gpu == 0:
     if args.pretrain is not None:
