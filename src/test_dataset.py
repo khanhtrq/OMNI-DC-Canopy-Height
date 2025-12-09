@@ -37,6 +37,7 @@ if __name__ == '__main__':
     args.batch_size = 4
     args.val_depth_pattern = "30000"
     args.lr = 1e-4
+    args.backbone_model = "rgb"
     
     data_name = args.train_data_name
     module_name = 'data.' + data_name.lower()
