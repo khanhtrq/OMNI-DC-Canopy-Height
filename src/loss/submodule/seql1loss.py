@@ -18,8 +18,8 @@ class SeqL1Loss(nn.Module):
         num_valid = torch.sum(mask, dim=[1, 2, 3])
 
         n_predictions = len(seq_pred)
-        print("Number of predictions in SeqL1Loss:", n_predictions)
-        print("Number of valid pixels:", num_valid)
+        # print("Number of predictions in SeqL1Loss:", n_predictions)
+        # print("Number of valid pixels:", num_valid)
         loss = 0.0
 
         for i in range(n_predictions):
@@ -29,6 +29,6 @@ class SeqL1Loss(nn.Module):
             i_loss = torch.sum(i_loss, dim=[1, 2, 3]) / (num_valid + 1e-8)
             loss += i_weight * i_loss.sum()
 
-            print(f"Loss at prediction {i}: {i_loss.sum().item()}, weight: {i_weight}")
+            print(f"Loss L1 at prediction {i}: {i_loss.sum().item()}, weight: {i_weight}")
 
         return loss
