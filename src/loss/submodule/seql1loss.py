@@ -18,6 +18,7 @@ class SeqL1Loss(nn.Module):
         num_valid = torch.sum(mask, dim=[1, 2, 3])
 
         n_predictions = len(seq_pred)
+        print("Number of predictions in SeqL1Loss:", n_predictions)
         loss = 0.0
 
         for i in range(n_predictions):
