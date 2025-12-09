@@ -79,4 +79,6 @@ class SequentialLoss(BaseLoss):
         loss_val = torch.cat((loss_val, loss_sum))
         loss_val = torch.unsqueeze(loss_val, dim=0).detach()
 
+        print("Total Loss:", loss_sum.item())
+
         return loss_sum, loss_val
