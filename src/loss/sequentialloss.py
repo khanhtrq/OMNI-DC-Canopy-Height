@@ -67,6 +67,9 @@ class SequentialLoss(BaseLoss):
                 raise NotImplementedError
 
             loss_tmp = loss['weight'] * loss_tmp
+
+            print(f"Loss {loss_type}: {loss_tmp.item()}")
+            print("Loss tmp value:", loss_tmp.item())
             loss_val.append(loss_tmp)
 
         loss_val = torch.stack(loss_val)
