@@ -35,7 +35,7 @@ if __name__ == '__main__':
     args.val_data_name = "iBims_Draft"
     args.epochs = 20
     args.batch_size = 4
-    args.val_depth_pattern = "30000"
+    args.val_depth_pattern = "3000"
     args.lr = 1e-4
     args.backbone_model = "rgb"
     
