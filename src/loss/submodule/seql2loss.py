@@ -27,6 +27,6 @@ class SeqL2Loss(nn.Module):
             i_loss = torch.sum(i_loss, dim=[1, 2, 3]) / (num_valid + 1e-8)
             loss += i_weight * i_loss.sum()
 
-            print(f"Loss L2 at prediction {i}: {i_loss.sum().item()}, weight: {i_weight}")
+            # print(f"Loss L2 at prediction {i}: {i_loss.sum().item()}, weight: {i_weight}")
 
         return loss

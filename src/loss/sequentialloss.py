@@ -68,8 +68,8 @@ class SequentialLoss(BaseLoss):
 
             loss_tmp = loss['weight'] * loss_tmp
 
-            print(f"Loss {loss_type}: {loss_tmp.item()}")
-            print("Loss tmp value:", loss_tmp.item())
+            # print(f"Loss {loss_type}: {loss_tmp.item()}")
+            # print("Loss tmp value:", loss_tmp.item())
             loss_val.append(loss_tmp)
 
         loss_val = torch.stack(loss_val)
@@ -79,6 +79,6 @@ class SequentialLoss(BaseLoss):
         loss_val = torch.cat((loss_val, loss_sum))
         loss_val = torch.unsqueeze(loss_val, dim=0).detach()
 
-        print("Total Loss:", loss_sum.item())
+        # print("Total Loss:", loss_sum.item())
 
         return loss_sum, loss_val
