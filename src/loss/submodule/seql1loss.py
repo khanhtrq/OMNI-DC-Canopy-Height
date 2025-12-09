@@ -19,6 +19,7 @@ class SeqL1Loss(nn.Module):
 
         n_predictions = len(seq_pred)
         print("Number of predictions in SeqL1Loss:", n_predictions)
+        print("Number of valid pixels:", num_valid)
         loss = 0.0
 
         for i in range(n_predictions):
