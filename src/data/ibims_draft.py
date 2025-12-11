@@ -63,7 +63,7 @@ class iBims_Draft(BaseDataset):
     def __len__(self):
         # return 32
         if self.mode == "train":
-            return int(0.5*len(self.file_idx))
+            return int(0.3*len(self.file_idx))
         elif self.mode == "test" or self.mode == "val":
             return len(self.file_idx)
     
