@@ -18,11 +18,12 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/gedi_height"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/sentinel_image"
+gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI"
+sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel"
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
 
+regions = ["HoangLien", "CucPhuong", "BaBe"]
 
 class iBims_Draft(BaseDataset):
     def __init__(self, args, mode):
@@ -50,30 +51,34 @@ class iBims_Draft(BaseDataset):
         
         ratio_train = 0.8 
 
+        self.sentinel_paths = []
+        self.gedi_paths = []
+        for r in regions:
+            self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
+            self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
+
         rng = np.random.default_rng(seed=42)   # fixed seed
-        file_idx_all = rng.permutation(len(os.listdir(gedi_folder))) 
+        file_idx_all = rng.permutation(len(self.gedi_paths)) 
 
         if self.mode == "train":
-            file_idx_train = file_idx_all[:int(ratio_train * len(os.listdir(gedi_folder)))]
+            file_idx_train = file_idx_all[:int(ratio_train * len(self.gedi_paths))]
             self.file_idx = file_idx_train
         elif self.mode == "test" or self.mode == "val":
-            file_idx_test = file_idx_all[int(ratio_train * len(os.listdir(gedi_folder))):]
+            file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
             self.file_idx = file_idx_test
 
     def __len__(self):
         # return 32
-        if self.mode == "train":
-            return int(0.3*len(self.file_idx))
-        elif self.mode == "test" or self.mode == "val":
-            return len(self.file_idx)
+        return len(self.file_idx)
     
     def __getitem__(self, idx):
         input_file_idx = self.file_idx[idx]
-        gedi_file = os.path.join(gedi_folder, f"{input_file_idx}.npy")
-        sentinel_file = os.path.join(sentinel_folder, f"{input_file_idx}.npy")
 
-        gedi = np.load(gedi_file)
-        rgb = np.load(sentinel_file)
+        gedi_path = os.path.join(gedi_folder, self.gedi_paths[idx])
+        sentinel_path = os.path.join(sentinel_folder, self.sentinel_paths[idx])
+
+        gedi = np.load(gedi_path)
+        rgb = np.load(sentinel_path)
 
         gedi = gedi.astype(np.float32)
         rgb = rgb.astype(np.float32)
