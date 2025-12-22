@@ -39,6 +39,7 @@ if __name__ == '__main__':
     args.lr = 1e-4
     args.backbone_model = "rgbd"
     args.gpus = '0'
+    args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*SeqLaplace'
     
     data_name = args.train_data_name
     module_name = 'data.' + data_name.lower()
