@@ -39,24 +39,49 @@ if __name__ == '__main__':
     args.lr = 1e-4
     args.backbone_model = "rgbd"
     args.gpus = '0'
-    args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
-    args.milestones = '10 15'
-    
-    data_name = args.train_data_name
-    module_name = 'data.' + data_name.lower()
-    dataset_name = data_name
-    module = import_module(module_name)
+    # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
+    args.loss = '1.0*SeqL1+1.0*SeqL2'
+    # args.milestones = '10 15'
 
-    print(module_name)
+    args.pretrain = 'model_best_72epochs.pt'
 
-    print(module)
+    #---------------
+    #Draft Dec 24: Try to load trained model from Hugging Face
+    # args.load_dav2 = 1
+    # net = OGNIDC.from_pretrained("zuoym15/OMNI-DC", args=args, strict= False)
+    # net = OGNIDC(args=args)
+    # if args.pretrain is not None:
+    #     assert os.path.exists(args.pretrain), \
+    #         "file not found: {}".format(args.pretrain)
 
-    dataset = getattr(module, dataset_name)(args, mode="test")
-    # dataset = getattr(module, dataset_name)(args, mode="train")
+    #     # checkpoint = torch.load(args.pretrain, map_location={'cuda:0': 'cuda:%d' % gpu})
+    #     checkpoint = torch.load(args.pretrain, map_location='cpu')
 
-    data_train = get_data(args, 'train')
+    #     model_dict = net.state_dict()
+    #     state_dict = checkpoint['net']
 
-    net = OGNIDC(args)
+    #     compatible_state_dict = {}
+    #     skipped = []
+
+    #     for k, v in state_dict.items():
+    #         if k in model_dict and v.shape == model_dict[k].shape:
+    #             compatible_state_dict[k] = v
+    #         else:
+    #             skipped.append(k)
+
+    #     missing, unexpected = net.load_state_dict(
+    #         compatible_state_dict,
+    #         strict=False
+    #     )
+    #     print(compatible_state_dict.keys())
+        
+        # net.load_state_dict(checkpoint['net'], strict=False)
+
+    #     print('Load network parameters from : {}'.format(args.pretrain))
+    # print("Done")
+    # exit()
+    #---------------
+
     # print("Getting sentinel data:")
     # for i in range(10):
     #     dataset[i]
@@ -75,6 +100,7 @@ if __name__ == '__main__':
     # for param in net.parameters():
     #     param.requires_grad = False
 
+    net = OGNIDC(args=args)
     i = 0 
     for name, param in net.named_parameters():
         if i != 0: 

@@ -112,6 +112,9 @@ def train(gpu, args):
     # Network
     if args.model == 'OGNIDC':
         net = OGNIDC(args)
+        # Dec 23: Code to load depth completion trained model
+        # net = OGNIDC.from_pretrained("zuoym15/OMNI-DC", args=args)
+
         # For running the first demo code, November 17
         # for param in net.parameters():
         #     param.requires_grad = False
@@ -137,8 +140,24 @@ def train(gpu, args):
 
         # checkpoint = torch.load(args.pretrain, map_location={'cuda:0': 'cuda:%d' % gpu})
         checkpoint = torch.load(args.pretrain, map_location='cpu')
-        net.load_state_dict(checkpoint['net'])
+        # net.load_state_dict(checkpoint['net'])
+        
+        model_dict = net.state_dict()
+        state_dict = checkpoint['net']
 
+        compatible_state_dict = {}
+        skipped = []
+
+        for k, v in state_dict.items():
+            if k in model_dict and v.shape == model_dict[k].shape:
+                compatible_state_dict[k] = v
+            else:
+                skipped.append(k)
+
+        missing, unexpected = net.load_state_dict(
+            compatible_state_dict,
+            strict=False
+        )
         print('Load network parameters from : {}'.format(args.pretrain))
 
     # Loss

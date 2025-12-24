@@ -20,10 +20,12 @@ split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
 gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI"
 sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel"
-# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\gedi_height"
-# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\sentinel_image"
-
 regions = ["HoangLien", "CucPhuong", "BaBe"]
+
+# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
+# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
+# regions = ["HoangLien"]
+
 
 class iBims_Draft(BaseDataset):
     def __init__(self, args, mode):
