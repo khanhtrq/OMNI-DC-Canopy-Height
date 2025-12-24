@@ -139,7 +139,7 @@ def train(gpu, args):
             "file not found: {}".format(args.pretrain)
 
         # checkpoint = torch.load(args.pretrain, map_location={'cuda:0': 'cuda:%d' % gpu})
-        checkpoint = torch.load(args.pretrain, map_location='cpu')
+        checkpoint = torch.load(args.pretrain, map_location='cpu', weights_only=False)
         # net.load_state_dict(checkpoint['net'])
         
         model_dict = net.state_dict()
