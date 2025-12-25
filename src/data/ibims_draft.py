@@ -21,7 +21,7 @@ split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI"
 sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel"
 regions = ["HoangLien", "CucPhuong", "BaBe"]
-regions = ["BaBe"]
+regions = ["CucPhuong"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
