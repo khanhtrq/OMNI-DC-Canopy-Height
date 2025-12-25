@@ -33,10 +33,10 @@ if __name__ == '__main__':
     args.train_data_name = "iBims_Draft"
     args.test_data_name = "iBims_Draft"
     args.val_data_name = "iBims_Draft"
-    args.epochs = 20
+    args.epochs = 50
     args.batch_size = 8
     args.val_depth_pattern = "60000"
-    args.lr = 1e-4
+    args.lr = 1e-5
     args.backbone_model = "rgbd"
     args.gpus = '0'
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
