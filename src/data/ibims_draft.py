@@ -21,7 +21,7 @@ split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI"
 sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel"
 regions = ["HoangLien", "CucPhuong", "BaBe"]
-regions = ["BaBe"]
+# regions = ["BaBe"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
@@ -66,7 +66,7 @@ class iBims_Draft(BaseDataset):
             for i in range(len(gedi_paths_all)):
                 gedi_path = os.path.join(gedi_folder, gedi_paths_all[i])
                 gedi = np.load(gedi_path)
-                if np.sum(~np.isnan(gedi)) > 50:
+                if np.sum(~np.isnan(gedi)) >= 50:
                     self.gedi_paths.append(gedi_paths_all[i])
                     self.sentinel_paths.append(sentinel_paths_all[i])
 
