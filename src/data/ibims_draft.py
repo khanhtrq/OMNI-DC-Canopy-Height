@@ -60,6 +60,10 @@ class iBims_Draft(BaseDataset):
             self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
             self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
 
+        #filtering patches with not enough GEDI points
+        
+        
+        #Spliting data into train and test set
         rng = np.random.default_rng(seed=42)   # fixed seed
         file_idx_all = rng.permutation(len(self.gedi_paths)) 
 
@@ -77,8 +81,8 @@ class iBims_Draft(BaseDataset):
     def __getitem__(self, idx):
         input_file_idx = self.file_idx[idx]
 
-        gedi_path = os.path.join(gedi_folder, self.gedi_paths[idx])
-        sentinel_path = os.path.join(sentinel_folder, self.sentinel_paths[idx])
+        gedi_path = os.path.join(gedi_folder, self.gedi_paths[input_file_idx])
+        sentinel_path = os.path.join(sentinel_folder, self.sentinel_paths[input_file_idx])
 
         gedi = np.load(gedi_path)
         rgb = np.load(sentinel_path)
