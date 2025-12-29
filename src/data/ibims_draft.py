@@ -57,12 +57,19 @@ class iBims_Draft(BaseDataset):
         self.sentinel_paths = []
         self.gedi_paths = []
         for r in regions:
-            self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
-            self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
+            # self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
+            # self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
 
-        #filtering patches with not enough GEDI points
-        
-        
+            # filtering patches with not enough GEDI points
+            gedi_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
+            sentinel_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
+            for i in range(len(gedi_paths_all)):
+                gedi_path = os.path.join(gedi_folder, gedi_paths_all[i])
+                gedi = np.load(gedi_path)
+                if np.sum(~np.isnan(gedi)) > 50:
+                    self.gedi_paths.append(gedi_paths_all[i])
+                    self.sentinel_paths.append(sentinel_paths_all[i])
+
         #Spliting data into train and test set
         rng = np.random.default_rng(seed=42)   # fixed seed
         file_idx_all = rng.permutation(len(self.gedi_paths)) 
