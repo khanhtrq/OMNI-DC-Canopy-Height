@@ -40,7 +40,7 @@ if __name__ == '__main__':
     args.backbone_model = "rgbd"
     args.gpus = '0'
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
-    args.loss = '1.0*SeqL1+1.0*SeqL2+0.5*SeqLaplace'
+    args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*SeqLaplace'
     args.milestones = ''
 
     # args.pretrain = 'model_best_72epochs.pt'
