@@ -123,9 +123,6 @@ class iBims_Draft(BaseDataset):
                 )
             ])
 
-        print("SHAPE:", rgb.shape)      
-        print(self.data_mode)
-
         t_rgb_np_raw = T.Compose([
             self.ToNumpy(),
         ])
