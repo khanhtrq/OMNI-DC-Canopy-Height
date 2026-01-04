@@ -313,7 +313,7 @@ class OGNIDCSummary(BaseSummary):
             img_tmp = np.concatenate(img_tmp, axis=2) # W
             img_tmp = torch.from_numpy(img_tmp)
 
-            self.add_image(self.mode + f'/{summary_img_name_list[i]}', img_tmp, global_step)
+            # self.add_image(self.mode + f'/{summary_img_name_list[i]}', img_tmp, global_step)
 
         self.flush()
 
