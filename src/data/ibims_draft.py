@@ -18,10 +18,10 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel"
+gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/GEDI"
+sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
 regions = ["HoangLien", "CucPhuong", "BaBe"]
-# regions = ["BaBe"]
+regions = ["CucPhuong", "BaBe"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
@@ -33,6 +33,7 @@ class iBims_Draft(BaseDataset):
         super(iBims_Draft, self).__init__(args, mode)
 
         self.args = args
+        self.data_mode = args.backbone_mode
         self.mode = mode
 
         self.height = 480
@@ -108,11 +109,19 @@ class iBims_Draft(BaseDataset):
 
         K = torch.eye(3)
 
-        t_rgb = T.Compose([
-            T.ToTensor(),
-            T.Normalize(mean=[1467.741681522291, 1532.5968758647118, 1334.2297965915839],
-                         std=[339.82890722401294, 230.80547751218842, 173.8590035078182])
-        ])
+        if 'rgb' in self.data_mode:
+            t_rgb = T.Compose([
+                T.ToTensor(),
+                T.Normalize(mean=[1467.741681522291, 1532.5968758647118, 1334.2297965915839],
+                            std=[339.82890722401294, 230.80547751218842, 173.8590035078182])
+            ])
+        elif 'sentinel' in self.data_mode:
+            t_rgb = T.Compose([
+                T.ToTensor(),
+                T.Normalize(mean=[1445.2507821473719, 1494.0496883470857, 1695.0355912679454, 1564.6835706583588, 2027.4767477712417, 3214.2947198416723, 3624.9778571404872, 3675.896774446667, 3823.0191113997635, 3810.2311611275345, 2921.714671898899, 2096.318336982956],
+                            std=[213.97085480597985, 236.57899563433898, 264.3780942144651, 334.3297911214344, 332.1163963382028, 504.0289211352316, 630.1565564561154, 696.8590235637502, 698.3457937838511, 635.1889167644749, 583.1581743442069, 504.8285260785615]
+                )
+            ])      
 
         t_rgb_np_raw = T.Compose([
             self.ToNumpy(),

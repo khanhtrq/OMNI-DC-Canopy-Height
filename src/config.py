@@ -4,6 +4,14 @@ import argparse
 parser = argparse.ArgumentParser(description='OGNIDC')
 
 # Dataset
+parser.add_argument('--sentinel_folder',
+                    type=str,
+                    default="/kaggle/input/gedi-canopy-height-hoanglien/Sentinel",
+                    help='path to sentinel folder')
+parser.add_argument('--gedi_folder',
+                    type=str,
+                    default="/kaggle/input/gedi-canopy-height-hoanglien/GEDI",
+                    help='path to gedi folder')
 parser.add_argument('--dir_data',
                     type=str,
                     default='../datasets/nyudepthv2_h5',
