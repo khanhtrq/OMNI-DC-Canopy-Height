@@ -70,6 +70,9 @@ class Backbone(nn.Module):
                                           bn=False)
             self.conv1 = conv_bn_relu(64, 64, kernel=3, stride=1, padding=1,
                                       bn=False)  
+        elif mode == 'sentinel':
+            self.conv1_rgb = conv_bn_relu(12, 48, kernel=3, stride=1, padding=1,
+                                          bn=False)            
         else:
             raise TypeError(mode)
 
