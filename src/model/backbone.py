@@ -204,7 +204,7 @@ class Backbone(nn.Module):
             fe1_dep = self.conv1_dep(depth)
             fe1 = torch.cat((fe1_rgb, fe1_dep), dim=1)
             fe1 = self.conv1(fe1)
-        elif self.mode == 'rgb':
+        elif self.mode == 'rgb' or self.mode == 'sentinel':
             fe1 = self.conv1(rgb)
         elif self.mode == 'd':
             fe1 = self.conv1(depth)
