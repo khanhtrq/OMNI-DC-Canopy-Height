@@ -24,7 +24,7 @@ gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_fil
 sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
 
 regions = ["HoangLien", "CucPhuong", "BaBe"]
-regions = ["HoangLien"]
+regions = ["BaBe"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
