@@ -19,10 +19,10 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
 # gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/GEDI"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
-
 gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
-# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
+
+sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
 
 regions = ["HoangLien", "CucPhuong", "BaBe"]
 regions = ["CucPhuong", "BaBe"]
