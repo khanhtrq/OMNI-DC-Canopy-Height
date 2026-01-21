@@ -29,9 +29,9 @@ if __name__ == '__main__':
     args = check_args(args_config)
     # print(args)
     # args.split_json = "./khanh"
-    args.train_data_name = "iBims_Draft"
-    args.test_data_name = "iBims_Draft"
-    args.val_data_name = "iBims_Draft"
+    args.train_data_name = "CanopyHeight"
+    args.test_data_name = "CanopyHeight"
+    args.val_data_name = "CanopyHeight"
     args.epochs = 50
     args.batch_size = 8
     args.val_depth_pattern = "60000"
