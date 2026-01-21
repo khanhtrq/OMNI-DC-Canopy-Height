@@ -33,9 +33,9 @@ regions = ["CucPhuong"]
 # regions = ["HoangLien"]
 
 
-class iBims_Draft(BaseDataset):
+class CanopyHeight(BaseDataset):
     def __init__(self, args, mode):
-        super(iBims_Draft, self).__init__(args, mode)
+        super(CanopyHeight, self).__init__(args, mode)
 
         self.args = args
         self.data_mode = args.backbone_mode
