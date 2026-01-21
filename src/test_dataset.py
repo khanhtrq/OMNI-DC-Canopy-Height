@@ -1,7 +1,6 @@
 from config import args as args_config
 import os
 import torch
-from data import ibims, ibims_draft
 from data import get as get_data
 from importlib import import_module
 from main import test, train
