@@ -41,6 +41,7 @@ def make_optimizer_scheduler(args, target, num_batches=-1):
 
     trainable = target.parameters()
     optimizer = optimizer_class(trainable, **kwargs_optimizer)
+    print('Scheduler milestones:', args.milestones)
     scheduler = lrs.MultiStepLR(optimizer, milestones=args.milestones, gamma=args.gamma)
 
     return optimizer, scheduler

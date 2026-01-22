@@ -64,14 +64,14 @@ class Backbone(nn.Module):
             self.conv1 = conv_bn_relu(3, 64, kernel=3, stride=1, padding=1,
                                       bn=False)
         elif mode == 'sentineld':
-            self.conv1_rgb = conv_bn_relu(10, 48, kernel=3, stride=1, padding=1,
+            self.conv1_rgb = conv_bn_relu(12, 48, kernel=3, stride=1, padding=1,
                                           bn=False)
             self.conv1_dep = conv_bn_relu(depth_input_channels, 16, kernel=3, stride=1, padding=1,
                                           bn=False)
             self.conv1 = conv_bn_relu(64, 64, kernel=3, stride=1, padding=1,
                                       bn=False)  
         elif mode == 'sentinel':
-            self.conv1 = conv_bn_relu(10, 64, kernel=3, stride=1, padding=1,
+            self.conv1 = conv_bn_relu(12, 64, kernel=3, stride=1, padding=1,
                                       bn=False)       
         else:
             raise TypeError(mode)
