@@ -43,7 +43,7 @@ if __name__ == '__main__':
     args.loss = '1.0*SeqL1+1.0*SeqL2'
     args.milestones = [20, 40, 80]
 
-    args.pretrain = 'model_best_72epochs.pt'
+    # args.pretrain = 'model_best_72epochs.pt'
 
     #---------------
     #Draft Dec 24: Try to load trained model from Hugging Face
