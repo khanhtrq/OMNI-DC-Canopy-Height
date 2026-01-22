@@ -41,7 +41,7 @@ if __name__ == '__main__':
     args.gpus = '0'
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
     args.loss = '1.0*SeqL1+1.0*SeqL2'
-    args.milestones = [20, 40]
+    args.milestones = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
     # args.pretrain = 'model_best_72epochs.pt'
 
