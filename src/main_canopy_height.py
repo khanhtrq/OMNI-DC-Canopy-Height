@@ -32,7 +32,7 @@ if __name__ == '__main__':
     args.train_data_name = "CanopyHeightDataset"
     args.test_data_name = "CanopyHeightDataset"
     args.val_data_name = "CanopyHeightDataset"
-    args.epochs = 50
+    args.epochs = 100
     args.batch_size = 8
     args.val_depth_pattern = "60000"
     args.lr = 1e-5
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     args.gpus = '0'
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
     args.loss = '1.0*SeqL1+1.0*SeqL2'
-    args.milestones = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    args.milestones = [20, 40, 80]
 
     # args.pretrain = 'model_best_72epochs.pt'
 
