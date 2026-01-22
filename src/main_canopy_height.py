@@ -44,7 +44,7 @@ if __name__ == '__main__':
     args.milestones = [10, 20, 50]
     args.gamma = 0.2
 
-    # args.pretrain = 'model_best_72epochs.pt'
+    args.pretrain = 'model_best_72epochs.pt'
 
     #---------------
     #Draft Dec 24: Try to load trained model from Hugging Face
