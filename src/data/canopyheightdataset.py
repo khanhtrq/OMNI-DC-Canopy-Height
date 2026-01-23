@@ -171,31 +171,11 @@ class CanopyHeightDataset(BaseDataset):
         dep_ex_sp = dep * (~mask_sp.to(torch.bool)).type_as(dep)
         dep_ex_sp[dep_ex_sp == 0] = float('nan')
 
-        # print("Number of points depth exclusive sparse:", (dep_ex_sp > 0).sum().item())
-        # print("Max in depth exclusive sparse:", np.nanmax(dep_ex_sp.numpy()))
-        # print("Max in depth sparse:", np.nanmax(dep_sp.numpy()))
-        # print("Max all:", np.nanmax(dep.numpy()))
-
-        # Return ground truth depth exclusive sparse points for evaluation
-        # if self.mode == "test" or self.mode == "val":
-
-        dep = dep_ex_sp
-    
-
-        # print("Number of points after excluding points in sparse depth:", (dep > 0).sum().item())
-
-        # print("Nubmer of not nan values in sparse depth:", torch.sum(~torch.isnan(dep_sp)).item())
-        # print("Number of not nan values in ground truth depth:", torch.sum(~torch.isnan(dep)).item())
-        # print(">0:", (dep > 0).sum().item())
-
-        # print("\n")
-        # print("Max in raw rgb channels:", rgb_np_raw[0].max(), rgb_np_raw[1].max(), rgb_np_raw[2].max())
-        # print("Min in raw rgb channels:", rgb_np_raw[0].min(), rgb_np_raw[1].min(), rgb_np_raw[2].min())
-        # print("Mean in raw rgb channels:", rgb_np_raw[0].mean(), rgb_np_raw[1].mean(), rgb_np_raw[2].mean())
-        # print("\n")
-        # print("Max in rgb channels:", rgb[0].max(), rgb[1].max(), rgb[2].max())
-        # print("Min in rgb channels:", rgb[0].min(), rgb[1].min(), rgb[2].min())
-        # print("Mean in rgb channels:", rgb[0].mean(), rgb[1].mean(), rgb[2].mean())
+        # Jan 23, 2026: all GEDI points as ground truth
+        # for training 
+        # ------------
+        if self.mode == "test" or self.mode == "val":
+            dep = dep_ex_sp
 
         # rgb = rgb[0:1, :, :]  # only use band 1 (red band)
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
