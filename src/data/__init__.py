@@ -229,6 +229,9 @@ class BaseDataset(Dataset):
             if match_density:
                 # we want a uniform density
                 num_sample_normalized = max(int(round(num_idx * num_sample / (height * width))), 5)
+
+                # Jan 23, 2026
+                num_sample_normalized = int(round(num_idx * num_sample / (height * width)))
                 idx_sample = torch.randperm(num_idx)[:num_sample_normalized]
             else:
                 idx_sample = torch.randperm(num_idx)[:num_sample]
