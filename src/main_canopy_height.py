@@ -34,10 +34,10 @@ if __name__ == '__main__':
     args.val_data_name = "CanopyHeightDataset"
     args.epochs = 50
     args.batch_size = 8
-    args.val_depth_pattern = "5"
+    args.val_depth_pattern = "45000"
     args.lr = 1e-4
     # args.backbone_mode = "rgbd"
-    args.backbone_mode = "sentinel"
+    args.backbone_mode = "sentineld"
     args.gpus = '0'
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
     args.loss = '1.0*SeqL1+1.0*SeqL2'
