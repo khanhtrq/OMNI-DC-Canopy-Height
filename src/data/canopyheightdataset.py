@@ -168,11 +168,12 @@ class CanopyHeightDataset(BaseDataset):
         # print("Type of sparse mask:", mask_sp.dtype)
         # print("Number of points in sparse mask:", mask_sp.sum().item())
 
+        # Exclude sparse points from ground truth depth, for validation and testing
         dep_ex_sp = dep * (~mask_sp.to(torch.bool)).type_as(dep)
         dep_ex_sp[dep_ex_sp == 0] = float('nan')
 
         # Jan 23, 2026: all GEDI points as ground truth
-        # for training 
+        # for validation and testing 
         # ------------
         if self.mode == "test" or self.mode == "val":
             dep = dep_ex_sp
