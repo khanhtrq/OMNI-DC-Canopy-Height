@@ -34,7 +34,7 @@ if __name__ == '__main__':
     args.val_data_name = "CanopyHeightDataset"
     args.epochs = 70
     args.batch_size = 8
-    args.val_depth_pattern = "45000"
+    args.val_depth_pattern = "60000"
     args.lr = 1e-4
     # args.backbone_mode = "rgbd"
     args.backbone_mode = "sentineld"
