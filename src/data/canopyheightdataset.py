@@ -25,7 +25,7 @@ gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_fil
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
 
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD5/Sentinel-10band-SVD5"
+sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD6/Sentinel-10band-SVD6"
 
 regions = ["HoangLien", "CucPhuong", "BaBe"]
 regions = ["CucPhuong", "BaBe"]
@@ -140,9 +140,14 @@ class CanopyHeightDataset(BaseDataset):
                 # )
 
                 # SVD 5 - 10 bands
-                T.Normalize(mean=[8.78252562e+03, 8.31726226e+00, 1.05245297e+00, 2.84851171e-01, 2.91621488e-03],
-                            std=[1447.67461915, 716.00579042, 327.87595153, 168.70943227, 102.73989055]
-                )   
+                # T.Normalize(mean=[8.78252562e+03, 8.31726226e+00, 1.05245297e+00, 2.84851171e-01, 2.91621488e-03],
+                #             std=[1447.67461915, 716.00579042, 327.87595153, 168.70943227, 102.73989055]
+                # )   
+
+                # SVD 6 - 10 bands
+                T.Normalize(mean=[8.78252562e+03,  8.31726226e+00,  1.05245297e+00,  2.84851171e-01, 2.91621488e-03, -5.57658107e-01],
+                            std=[1447.67461915,  716.00579042,  327.87595153,  168.70943227,  102.73989055, 75.33932337]
+                )                 
                 
             ])
             rgb = rgb.transpose(1, 2, 0)
