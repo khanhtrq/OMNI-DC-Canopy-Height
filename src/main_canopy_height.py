@@ -35,7 +35,7 @@ if __name__ == '__main__':
     args.epochs = 70
     args.batch_size = 8
     args.val_depth_pattern = "60000"
-    args.lr = 1e-4
+    args.lr = 1e-5
     # args.backbone_mode = "rgbd"
     args.backbone_mode = "sentineld"
     args.gpus = '0'
