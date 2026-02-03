@@ -35,12 +35,13 @@ if __name__ == '__main__':
     args.epochs = 70
     args.batch_size = 8
     args.val_depth_pattern = "60000"
-    args.lr = 1e-5
     # args.backbone_mode = "rgbd"
     args.backbone_mode = "sentineld"
     args.gpus = '0'
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
     args.loss = '1.0*SeqL1+1.0*SeqL2'
+
+    args.lr = 1e-4
     # args.milestones = [10, 20, 50]
     args.milestones = []
     args.gamma = 0.2
