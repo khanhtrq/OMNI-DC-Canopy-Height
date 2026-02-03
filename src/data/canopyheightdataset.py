@@ -22,13 +22,13 @@ split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
 
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
-# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
+sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
 
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
 
 regions = ["HoangLien", "CucPhuong", "BaBe"]
-regions = ["CucPhuong", "BaBe"]
+# regions = ["CucPhuong", "BaBe"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
@@ -127,10 +127,11 @@ class CanopyHeightDataset(BaseDataset):
                 T.ToTensor(),
 
                 # 12 bands
-                # ------------
-                # T.Normalize(mean=[1445.2507821473719, 1494.0496883470857, 1695.0355912679454, 1564.6835706583588, 2027.4767477712417, 3214.2947198416723, 3624.9778571404872, 3675.896774446667, 3823.0191113997635, 3810.2311611275345, 2921.714671898899, 2096.318336982956],
-                #             std=[213.97085480597985, 236.57899563433898, 264.3780942144651, 334.3297911214344, 332.1163963382028, 504.0289211352316, 630.1565564561154, 696.8590235637502, 698.3457937838511, 635.1889167644749, 583.1581743442069, 504.8285260785615]
-                # )
+                # statistics on Cuc Phuong and Ba Be
+                ------------
+                T.Normalize(mean=[1445.2507821473719, 1494.0496883470857, 1695.0355912679454, 1564.6835706583588, 2027.4767477712417, 3214.2947198416723, 3624.9778571404872, 3675.896774446667, 3823.0191113997635, 3810.2311611275345, 2921.714671898899, 2096.318336982956],
+                            std=[213.97085480597985, 236.57899563433898, 264.3780942144651, 334.3297911214344, 332.1163963382028, 504.0289211352316, 630.1565564561154, 696.8590235637502, 698.3457937838511, 635.1889167644749, 583.1581743442069, 504.8285260785615]
+                )
 
                 # 10 bands
                 #  excluduing band 1 and band 9
@@ -140,9 +141,9 @@ class CanopyHeightDataset(BaseDataset):
                 # )
 
                 # SVD 5 - 10 bands
-                T.Normalize(mean=[8.78252562e+03, 8.31726226e+00, 1.05245297e+00, 2.84851171e-01, 2.91621488e-03],
-                            std=[1447.67461915, 716.00579042, 327.87595153, 168.70943227, 102.73989055]
-                )   
+                # T.Normalize(mean=[8.78252562e+03, 8.31726226e+00, 1.05245297e+00, 2.84851171e-01, 2.91621488e-03],
+                #             std=[1447.67461915, 716.00579042, 327.87595153, 168.70943227, 102.73989055]
+                # )   
 
                 # SVD 6 - 10 bands
                 # T.Normalize(mean=[8.78252562e+03, 8.31726226e+00, 1.05245297e+00, 2.84851171e-01, 2.91621488e-03, -5.57658107e-01, -7.43684519e-01],
