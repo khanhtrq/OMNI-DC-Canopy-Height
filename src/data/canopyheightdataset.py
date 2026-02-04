@@ -19,7 +19,8 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
 # gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/GEDI"
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
+# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
+gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered_t60/GEDI_filtered_t60"
 
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
 sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
@@ -28,7 +29,7 @@ sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Se
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
 
 regions = ["HoangLien", "CucPhuong", "BaBe"]
-regions = ["HoangLien"]
+# regions = ["HoangLien"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
