@@ -28,7 +28,7 @@ sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Se
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
 
 regions = ["HoangLien", "CucPhuong", "BaBe"]
-regions = ["CucPhuong", "BaBe"]
+regions = ["HoangLien"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
@@ -79,8 +79,8 @@ class CanopyHeightDataset(BaseDataset):
                     self.sentinel_paths.append(sentinel_paths_all[i])
 
         #Spliting data into train and test set
-        # rng = np.random.default_rng(seed=42)   # fixed seed
-        rng = np.random.default_rng(seed=2404) 
+        rng = np.random.default_rng(seed=42)   # fixed seed
+        # rng = np.random.default_rng(seed=2404) 
         file_idx_all = rng.permutation(len(self.gedi_paths)) 
 
         if self.mode == "train":
