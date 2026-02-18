@@ -25,7 +25,7 @@ gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_fil
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
-sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD7/Sentinel-12band-SVD7"
+sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD6/Sentinel-12band-SVD6"
 
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
 
@@ -126,15 +126,16 @@ class CanopyHeightDataset(BaseDataset):
                             std=[339.82890722401294, 230.80547751218842, 173.8590035078182])
             ])
         elif 'sentinel' in self.data_mode:
-            mean_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD7/Sentinel-12band-SVD7/svd_means_k7.npy")
-            std_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD7/Sentinel-12band-SVD7/svd_stds_k7.npy")
+
+            mean_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD6/Sentinel-12band-SVD6/svd_means_k6.npy")
+            std_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD6/Sentinel-12band-SVD6/svd_stds_k6.npy")
 
             t_rgb = T.Compose([
                 T.ToTensor(),
                 # SVD 7 - 12 bands
                 T.Normalize(mean=mean_array.tolist(),
                             std=std_array.tolist())
-                            
+
                 # 12 bands
                 # statistics on Cuc Phuong and Ba Be
                 # ------------

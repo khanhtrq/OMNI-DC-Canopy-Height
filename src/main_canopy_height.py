@@ -27,11 +27,10 @@ def check_args(args):
 
 if __name__ == '__main__':
     args = check_args(args_config)
-    # print(args)
-    # args.split_json = "./khanh"
     args.train_data_name = "CanopyHeightDataset"
     args.test_data_name = "CanopyHeightDataset"
     args.val_data_name = "CanopyHeightDataset"
+    
     args.epochs = 70
     args.batch_size = 8
     args.val_depth_pattern = "60000"
