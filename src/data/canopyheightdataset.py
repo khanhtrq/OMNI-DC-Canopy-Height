@@ -25,12 +25,12 @@ gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_fil
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
-sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5"
+sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD7/Sentinel-12band-SVD7"
 
 # sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
 
 # regions = ["HoangLien", "CucPhuong", "BaBe"]
-regions = ["CucPhuong", "BaBe"]
+regions = ["CucPhuong"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
 # sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
@@ -127,8 +127,8 @@ class CanopyHeightDataset(BaseDataset):
             ])
         elif 'sentinel' in self.data_mode:
 
-            mean_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5/svd_means_k5.npy")
-            std_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5/svd_stds_k5.npy")
+            mean_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD7/Sentinel-12band-SVD7/svd_means_k7.npy")
+            std_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD7/Sentinel-12band-SVD7/svd_stds_k7.npy")
 
             t_rgb = T.Compose([
                 T.ToTensor(),
