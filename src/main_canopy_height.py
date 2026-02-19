@@ -40,9 +40,9 @@ if __name__ == '__main__':
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
     args.loss = '1.0*SeqL1+1.0*SeqL2'
 
-    args.lr = 1e-4
-    args.milestones = [10, 20, 50]
-    # args.milestones = []
+    args.lr = 1e-5
+    # args.milestones = [10, 20, 50]
+    args.milestones = []
     args.gamma = 0.2
 
     # args.pretrain = 'model_best_72epochs.pt'
