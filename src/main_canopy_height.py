@@ -31,7 +31,7 @@ if __name__ == '__main__':
     args.test_data_name = "CanopyHeightDataset"
     args.val_data_name = "CanopyHeightDataset"
     
-    args.epochs = 70
+    args.epochs = 50
     args.batch_size = 8
     args.val_depth_pattern = "60000"
     # args.backbone_mode = "rgbd"
