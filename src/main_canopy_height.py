@@ -31,18 +31,18 @@ if __name__ == '__main__':
     args.test_data_name = "CanopyHeightDataset"
     args.val_data_name = "CanopyHeightDataset"
     
-    args.epochs = 50
+    args.epochs = 200
     args.batch_size = 8
-    args.val_depth_pattern = "15000"
+    args.val_depth_pattern = "60000"
     # args.backbone_mode = "rgbd"
     args.backbone_mode = "sentineld"
     args.gpus = '0'
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
     args.loss = '1.0*SeqL1+1.0*SeqL2'
 
-    args.lr = 1e-5
+    args.lr = 1e-4
     # args.milestones = [10, 20, 50]
-    args.milestones = []
+    args.milestones = [50, 100, 150]
     args.gamma = 0.2
 
     # args.pretrain = 'model_best_72epochs.pt'
