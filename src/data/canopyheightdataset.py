@@ -33,8 +33,11 @@ sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentin
 
 
 # Kochi experiment
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/GEDI"
-sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/Sentinel"
+# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/GEDI"
+# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/Sentinel"
+gedi_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/GEDI"
+sentinel_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Sentinel"
+
 regions = ["Kochi"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
