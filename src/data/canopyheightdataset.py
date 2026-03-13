@@ -84,7 +84,11 @@ class CanopyHeightDataset(BaseDataset):
             for i in range(len(gedi_paths_all)):
                 gedi_path = os.path.join(gedi_folder, gedi_paths_all[i])
                 gedi = np.load(gedi_path)
-                if np.sum(~np.isnan(gedi)) >= 50:
+                # if np.sum(~np.isnan(gedi)) >= 50:
+
+                # NERCI inventory data
+                if np.sum(~np.isnan(gedi)) >= 0:
+
                     self.gedi_paths.append(gedi_paths_all[i])
                     self.sentinel_paths.append(sentinel_paths_all[i])
 
@@ -99,7 +103,9 @@ class CanopyHeightDataset(BaseDataset):
         elif self.mode == "test" or self.mode == "val":
             file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
             self.file_idx = file_idx_test
-        print(len(self.file_idx), "AAAAAAAAAAA")
+
+        print("Dataset length:", len(self.file_idx))
+        
     def __len__(self):
         # return 32
         return len(self.file_idx)
