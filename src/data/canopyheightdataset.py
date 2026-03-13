@@ -99,7 +99,7 @@ class CanopyHeightDataset(BaseDataset):
         elif self.mode == "test" or self.mode == "val":
             file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
             self.file_idx = file_idx_test
-
+        print(len(self.file_idx), "AAAAAAAAAAA")
     def __len__(self):
         # return 32
         return len(self.file_idx)
@@ -202,6 +202,13 @@ class CanopyHeightDataset(BaseDataset):
         # ------------
         if self.mode == "test" or self.mode == "val":
             dep = dep_ex_sp
+
+        if self.mode == 'inventory':
+            # Model evaluation on NERCI inventory data
+            # March 13, 2026
+            # ---------------
+
+            pass
 
         # rgb = rgb[0:1, :, :]  # only use band 1 (red band)
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
