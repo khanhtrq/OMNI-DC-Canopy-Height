@@ -118,6 +118,7 @@ class CanopyHeightDataset(BaseDataset):
                 self.file_idx = file_idx_test
         elif self.inventory_evaluation:
             file_idx_test = file_idx_all
+            self.file_idx = file_idx_tes
 
         print("Dataset length:", len(self.file_idx))
         
