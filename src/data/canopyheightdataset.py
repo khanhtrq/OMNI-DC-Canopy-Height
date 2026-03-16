@@ -18,23 +18,23 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
-# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/GEDI"
-gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
-# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered_t60/GEDI_filtered_t60"
+# self.gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/GEDI"
+self.gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
+# self.gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered_t60/GEDI_filtered_t60"
 
-# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
-# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
-# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
-sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5"
+# self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
+# self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
+# self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
+self.sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5"
 
-# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
+# self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
 
 # regions = ["HoangLien", "CucPhuong", "BaBe"]
 
 
 # Kochi experiment
-# gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/GEDI"
-# sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/Sentinel"
+# self.gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/GEDI"
+# self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Canopy_height_Kochi/Sentinel"
 gedi_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/kochi_new_RoI_mar11/GEDI"
 sentinel_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_nerci_inventory/Sentinel"
 
@@ -42,8 +42,8 @@ inventory_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi
 
 regions = ["Kochi"]
 
-# gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
-# sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
+# self.gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
+# self.sentinel_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\Sentinel"
 # regions = ["HoangLien"]
 
 
@@ -54,6 +54,10 @@ class CanopyHeightDataset(BaseDataset):
         self.args = args
         self.data_mode = args.backbone_mode
         self.mode = mode
+
+        self.gedi_folder = args.gedi_folder
+        self.sentinel_folder = args.sentinel_folder
+        self.regions = args.regions.split(',')
 
         self.inventory_evaluation = args.inventory_evaluation
 
@@ -80,15 +84,15 @@ class CanopyHeightDataset(BaseDataset):
         self.gedi_paths = []
         self.inventory_paths = []
         for r in regions:
-            # self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
-            # self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
+            # self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.gedi_folder, r))]
+            # self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.sentinel_folder, r))]
 
             # filtering patches with not enough GEDI points
-            gedi_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
-            sentinel_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
+            gedi_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.gedi_folder, r))]
+            sentinel_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.sentinel_folder, r))]
             inventory_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(inventory_folder, r))]
             for i in range(len(gedi_paths_all)):
-                gedi_path = os.path.join(gedi_folder, gedi_paths_all[i])
+                gedi_path = os.path.join(self.gedi_folder, gedi_paths_all[i])
                 gedi = np.load(gedi_path)
                 # if np.sum(~np.isnan(gedi)) >= 50:
 
@@ -129,8 +133,8 @@ class CanopyHeightDataset(BaseDataset):
     def __getitem__(self, idx):
         input_file_idx = self.file_idx[idx]
 
-        gedi_path = os.path.join(gedi_folder, self.gedi_paths[input_file_idx])
-        sentinel_path = os.path.join(sentinel_folder, self.sentinel_paths[input_file_idx])
+        gedi_path = os.path.join(self.gedi_folder, self.gedi_paths[input_file_idx])
+        sentinel_path = os.path.join(self.sentinel_folder, self.sentinel_paths[input_file_idx])
 
         gedi = np.load(gedi_path)
         rgb = np.load(sentinel_path)

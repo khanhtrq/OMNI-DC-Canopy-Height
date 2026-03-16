@@ -490,10 +490,22 @@ parser.add_argument('--save_uniformat_max_dataset_length',
 args = parser.parse_args()
 args.num_gpus = len(args.gpus.split(','))
 
+
 parser.add_argument('--inventory_evaluation', 
                     type=bool, 
                     default=False, 
                     help='Using NERCI inventory data for evaluation')
+
+parser.add_argument('--gedi_folder', 
+                    type=str, 
+                    help='Path to the GEDI folder')
+
+parser.add_argument('--sentinel_folder', 
+                    type=str, 
+                    help='Path to the Sentinel folder')
+parser.add_argument('--regions', 
+                    type=str, 
+                    help='Path to the Sentinel folder')
 
 current_time = time.strftime('%y%m%d_%H%M%S_')
 save_dir = args.log_dir + current_time + args.save
