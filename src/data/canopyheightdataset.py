@@ -118,7 +118,7 @@ class CanopyHeightDataset(BaseDataset):
                 file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
                 self.file_idx = file_idx_test
         elif self.inventory_evaluation:
-            file_idx_test = file_idx_all
+            file_idx_test = file_idx_all[:2]
             self.file_idx = file_idx_test
 
         print("Dataset length:", len(self.file_idx))
@@ -238,7 +238,7 @@ class CanopyHeightDataset(BaseDataset):
 
             # 'gt': for computing loss and evaluation
             # 'dep': sparse depth input to the model 
-            output = {'rgb': rgb, 'dep': dep, 'gt': inventory, 'K': K, 'pattern': pattern_id}
+            output = {'rgb': rgb, 'dep': dep, 'gt': dep, 'K': K, 'pattern': pattern_id}
             return output
 
         # rgb = rgb[0:1, :, :]  # only use band 1 (red band)
