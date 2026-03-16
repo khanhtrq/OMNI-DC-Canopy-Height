@@ -52,6 +52,6 @@ if __name__ == '__main__':
     # Evalution on NERCI inventory data
     args.inventory_evaluation = True
     args.pretrain = '/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_sentinel_GEDI_60kpoint.pt'   
-    test(0, args)
+    test(args)
 
 
