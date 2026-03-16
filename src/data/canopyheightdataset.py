@@ -19,13 +19,13 @@ dataset_folder = "E:\CEI - Carbon Stock\experiments\data\IBims-1"
 split_txt = "E:\CEI - Carbon Stock\experiments\data\IBims-1\imagelist.txt"
 
 # self.gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/GEDI"
-self.gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
+gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered/GEDI_filtered"
 # self.gedi_folder = "/kaggle/input/gedi-canopy-height-hoanglien/GEDI_filtered_t60/GEDI_filtered_t60"
 
 # self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/canopy_data/Sentinel"
 # self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-12band/Sentinel-12band"
 # self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band/Sentinel-10band"
-self.sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5"
+sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5"
 
 # self.sentinel_folder = "/kaggle/input/gedi-canopy-height-hoanglien/Sentinel-10band-SVD7/Sentinel-10band-SVD7"
 
