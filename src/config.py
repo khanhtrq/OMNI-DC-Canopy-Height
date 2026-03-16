@@ -487,10 +487,6 @@ parser.add_argument('--save_uniformat_max_dataset_length',
                     default=800,
                     help='if the dataset is too long, subsample to this length')
 
-args = parser.parse_args()
-args.num_gpus = len(args.gpus.split(','))
-
-
 parser.add_argument('--inventory_evaluation', 
                     type=bool, 
                     default=False, 
@@ -499,6 +495,12 @@ parser.add_argument('--inventory_evaluation',
 parser.add_argument('--regions', 
                     type=str, 
                     help='regions')
+
+
+args = parser.parse_args()
+args.num_gpus = len(args.gpus.split(','))
+
+
 
 current_time = time.strftime('%y%m%d_%H%M%S_')
 save_dir = args.log_dir + current_time + args.save
