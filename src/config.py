@@ -496,16 +496,9 @@ parser.add_argument('--inventory_evaluation',
                     default=False, 
                     help='Using NERCI inventory data for evaluation')
 
-parser.add_argument('--gedi_folder', 
-                    type=str, 
-                    help='Path to the GEDI folder')
-
-parser.add_argument('--sentinel_folder', 
-                    type=str, 
-                    help='Path to the Sentinel folder')
 parser.add_argument('--regions', 
                     type=str, 
-                    help='Path to the Sentinel folder')
+                    help='regions')
 
 current_time = time.strftime('%y%m%d_%H%M%S_')
 save_dir = args.log_dir + current_time + args.save
