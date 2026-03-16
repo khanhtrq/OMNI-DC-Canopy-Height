@@ -545,7 +545,7 @@ def test(args):
     pbar.close()
 
     # writer_test.update(args.epochs, sample, output)
-    # writer_test.print_loss(args.epochs)
+    writer_test.print_loss(args.epochs)
 
     t_avg = t_total / num_sample
     print('Elapsed time : {} sec, '
