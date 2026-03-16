@@ -83,7 +83,7 @@ class CanopyHeightDataset(BaseDataset):
         self.sentinel_paths = []
         self.gedi_paths = []
         self.inventory_paths = []
-        for r in regions:
+        for r in self.regions:
             # self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.gedi_folder, r))]
             # self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.sentinel_folder, r))]
 
