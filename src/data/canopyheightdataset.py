@@ -90,7 +90,10 @@ class CanopyHeightDataset(BaseDataset):
             # filtering patches with not enough GEDI points
             gedi_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.gedi_folder, r))]
             sentinel_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.sentinel_folder, r))]
-            inventory_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(inventory_folder, r))]
+            
+            if self.inventory_evaluation:
+                inventory_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(inventory_folder, r))]
+            
             for i in range(len(gedi_paths_all)):
                 gedi_path = os.path.join(self.gedi_folder, gedi_paths_all[i])
                 gedi = np.load(gedi_path)
