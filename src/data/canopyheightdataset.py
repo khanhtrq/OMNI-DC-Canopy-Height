@@ -117,7 +117,7 @@ class CanopyHeightDataset(BaseDataset):
                 file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
                 self.file_idx = file_idx_test
         elif self.inventory_evaluation:
-            file_idx_test = file_idx_all[:2]
+            file_idx_test = file_idx_all
             self.file_idx = file_idx_test
 
         print("Dataset length:", len(self.file_idx))
