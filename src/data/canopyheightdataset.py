@@ -238,6 +238,7 @@ class CanopyHeightDataset(BaseDataset):
             # 'gt': for computing loss and evaluation
             # 'dep': sparse depth input to the model 
             output = {'rgb': rgb, 'dep': dep_sp, 'gt': inventory, 'K': K, 'pattern': pattern_id}
+            print("Inventory evaluation")
             return output
 
         # rgb = rgb[0:1, :, :]  # only use band 1 (red band)

@@ -413,8 +413,9 @@ def test(args):
 
     data_test = get_data(args, 'test')
 
-    loader_test = DataLoader(dataset=data_test, batch_size=1,
-                             shuffle=False, num_workers=args.num_threads)
+    loader_test = DataLoader(dataset=data_test, batch_size=args.batch_siz,
+                             shuffle=False, num_workers=args.num_threads,
+                             drop_last=False)
 
     if args.model == 'OGNIDC':
         loss = SequentialLoss(args)
