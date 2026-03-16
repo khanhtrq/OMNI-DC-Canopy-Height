@@ -413,7 +413,7 @@ def test(args):
 
     data_test = get_data(args, 'test')
 
-    loader_test = DataLoader(dataset=data_test, batch_size=args.batch_siz,
+    loader_test = DataLoader(dataset=data_test, batch_size=args.batch_size,
                              shuffle=False, num_workers=args.num_threads,
                              drop_last=False)
 
