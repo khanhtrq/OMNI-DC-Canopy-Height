@@ -99,9 +99,9 @@ class CanopyHeightDataset(BaseDataset):
                         self.gedi_paths.append(gedi_paths_all[i])
                         self.sentinel_paths.append(sentinel_paths_all[i])
                 else:
-                    print(os.path.join(inventory_folder, r, inventory_paths_all[i]))
-                    if os.path.exists(os.path.join(inventory_folder, r, inventory_paths_all[i])):
-                        self.inventory_paths.append(os.path.join(r, inventory_paths_all[i]))
+                    print(os.path.join(inventory_folder, inventory_paths_all[i]))
+                    if os.path.exists(os.path.join(inventory_folder, inventory_paths_all[i])):
+                        self.inventory_paths.append(inventory_paths_all[i])
                         self.gedi_paths.append(gedi_paths_all[i])
                         self.sentinel_paths.append(sentinel_paths_all[i])
 
