@@ -38,6 +38,8 @@ sentinel_folder = "/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentin
 gedi_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_nerci_inventory/nerci_inventory"
 sentinel_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_nerci_inventory/Sentinel"
 
+inventory_folder = "/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_nerci_inventory/nerci_inventory"
+
 regions = ["Kochi"]
 
 # gedi_folder = "E:\CEI - Carbon Stock\experiments\data\canopyheight_HoangLien\GEDI"
@@ -52,6 +54,8 @@ class CanopyHeightDataset(BaseDataset):
         self.args = args
         self.data_mode = args.backbone_mode
         self.mode = mode
+
+        self.inventory_evaluation = args.inventory_evaluation
 
         self.height = 480
         self.width = 640
@@ -74,6 +78,7 @@ class CanopyHeightDataset(BaseDataset):
 
         self.sentinel_paths = []
         self.gedi_paths = []
+        self.inventory_paths = []
         for r in regions:
             # self.gedi_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
             # self.sentinel_paths += [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
@@ -81,28 +86,38 @@ class CanopyHeightDataset(BaseDataset):
             # filtering patches with not enough GEDI points
             gedi_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(gedi_folder, r))]
             sentinel_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(sentinel_folder, r))]
+            inventory_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(inventory_folder, r))]
             for i in range(len(gedi_paths_all)):
                 gedi_path = os.path.join(gedi_folder, gedi_paths_all[i])
                 gedi = np.load(gedi_path)
                 # if np.sum(~np.isnan(gedi)) >= 50:
 
                 # NERCI inventory data
-                if np.sum(~np.isnan(gedi)) >= 0:
+                if not self.inventory_evaluation:
+                    if np.sum(~np.isnan(gedi)) >= 50:
 
-                    self.gedi_paths.append(gedi_paths_all[i])
-                    self.sentinel_paths.append(sentinel_paths_all[i])
+                        self.gedi_paths.append(gedi_paths_all[i])
+                        self.sentinel_paths.append(sentinel_paths_all[i])
+                else:
+                    if os.path.exists(os.path.join(inventory_folder, r, inventory_paths_all[i])):
+                        self.inventory_paths.append(os.path.join(r, inventory_paths_all[i]))
+                        self.gedi_paths.append(gedi_paths_all[i])
+                        self.sentinel_paths.append(sentinel_paths_all[i])
 
         #Spliting data into train and test set
         rng = np.random.default_rng(seed=42)   # fixed seed
         # rng = np.random.default_rng(seed=2404) 
         file_idx_all = rng.permutation(len(self.gedi_paths)) 
 
-        if self.mode == "train":
-            file_idx_train = file_idx_all[:int(ratio_train * len(self.gedi_paths))]
-            self.file_idx = file_idx_train
-        elif self.mode == "test" or self.mode == "val":
-            file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
-            self.file_idx = file_idx_test
+        if not self.inventory_evaluation:
+            if self.mode == "train":
+                file_idx_train = file_idx_all[:int(ratio_train * len(self.gedi_paths))]
+                self.file_idx = file_idx_train
+            elif self.mode == "test" or self.mode == "val":
+                file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
+                self.file_idx = file_idx_test
+        elif self.inventory_evaluation:
+            file_idx_test = file_idx_all
 
         print("Dataset length:", len(self.file_idx))
         
@@ -209,12 +224,20 @@ class CanopyHeightDataset(BaseDataset):
         if self.mode == "test" or self.mode == "val":
             dep = dep_ex_sp
 
-        if self.mode == 'inventory':
+        if self.inventory_evaluation:
             # Model evaluation on NERCI inventory data
             # March 13, 2026
             # ---------------
 
-            pass
+            inventory_path = os.path.join(inventory_folder, self.inventory_paths[input_file_idx])
+            inventory = np.load(inventory_path)
+            inventory = inventory.astype(np.float32)
+            inventory = t_dep(inventory)
+
+            # 'gt': for computing loss and evaluation
+            # 'dep': sparse depth input to the model 
+            output = {'rgb': rgb, 'dep': dep, 'gt': inventory, 'K': K, 'pattern': pattern_id}
+            return output
 
         # rgb = rgb[0:1, :, :]  # only use band 1 (red band)
         output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}

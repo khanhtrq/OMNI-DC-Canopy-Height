@@ -490,6 +490,11 @@ parser.add_argument('--save_uniformat_max_dataset_length',
 args = parser.parse_args()
 args.num_gpus = len(args.gpus.split(','))
 
+parser.add_argument('--inventory_evaluation', 
+                    type=bool, 
+                    default=False, 
+                    help='Using NERCI inventory data for evaluation')
+
 current_time = time.strftime('%y%m%d_%H%M%S_')
 save_dir = args.log_dir + current_time + args.save
 args.save_dir = save_dir
