@@ -57,6 +57,7 @@ class CanopyHeightDataset(BaseDataset):
 
         self.gedi_folder = args.gedi_folder
         self.sentinel_folder = args.sentinel_folder
+        self.inventory_folder = args.inventory_folder
         self.regions = args.regions.split(',')
 
         self.inventory_data = args.inventory_data
@@ -92,7 +93,7 @@ class CanopyHeightDataset(BaseDataset):
             sentinel_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.sentinel_folder, r))]
             
             if self.inventory_data:
-                inventory_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(inventory_folder, r))]
+                inventory_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.inventory_folder, r))]
             
             for i in range(len(gedi_paths_all)):
                 gedi_path = os.path.join(self.gedi_folder, gedi_paths_all[i])
@@ -106,7 +107,7 @@ class CanopyHeightDataset(BaseDataset):
                         self.sentinel_paths.append(sentinel_paths_all[i])
                 # NERCI inventory data
                 else:
-                    if os.path.exists(os.path.join(inventory_folder, inventory_paths_all[i])):
+                    if os.path.exists(os.path.join(self.inventory_folder, inventory_paths_all[i])):
                         self.inventory_paths.append(inventory_paths_all[i])
                         self.gedi_paths.append(gedi_paths_all[i])
                         self.sentinel_paths.append(sentinel_paths_all[i])
@@ -245,7 +246,7 @@ class CanopyHeightDataset(BaseDataset):
             # March 13, 2026
             # ---------------
 
-            inventory_path = os.path.join(inventory_folder, self.inventory_paths[input_file_idx])
+            inventory_path = os.path.join(self.inventory_folder, self.inventory_paths[input_file_idx])
             inventory = np.load(inventory_path)
             inventory = inventory.astype(np.float32)
             inventory = t_dep(inventory)

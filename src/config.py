@@ -496,6 +496,11 @@ parser.add_argument('--regions',
                     type=str, 
                     help='regions')
 
+parser.add_argument('--inventory_folder',
+                    type=str,
+                    default="/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_nerci_inventory/nerci_inventory",
+                    help='path to gedi folder')
+
 
 args = parser.parse_args()
 args.num_gpus = len(args.gpus.split(','))
