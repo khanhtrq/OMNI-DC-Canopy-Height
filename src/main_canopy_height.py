@@ -45,6 +45,11 @@ if __name__ == '__main__':
     # args.milestones = [50, 100, 150]
     args.gamma = 0.2
 
+    if args.inventory_data:
+        args.pretrain = '/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_sentinel_GEDI_60kpoint.pt'   
+        test(args)
+        args.pretrain = None
+
     # args.pretrain = 'model_best_72epochs.pt'
 
     train(0, args)
