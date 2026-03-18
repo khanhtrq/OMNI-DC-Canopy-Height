@@ -48,7 +48,8 @@ if __name__ == '__main__':
     if args.inventory_data:
         args.pretrain = '/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_sentinel_GEDI_60kpoint.pt'   
         test(args)
-        args.pretrain = None
+        print("Evaluation on NERCI inventory data done.")
+        # args.pretrain = None
 
     # args.pretrain = 'model_best_72epochs.pt'
 
