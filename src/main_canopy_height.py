@@ -40,7 +40,7 @@ if __name__ == '__main__':
     # args.loss = '1.0*SeqL1+1.0*SeqL2+1.0*GradMatching+0.5*SeqLaplace'
     args.loss = '1.0*SeqL1+1.0*SeqL2'
 
-    args.lr = 1e-4
+    # args.lr = 1e-4
     # args.milestones = [10, 20, 50]
     # args.milestones = [50, 100, 150]
     args.gamma = 0.2
