@@ -45,6 +45,7 @@ if __name__ == '__main__':
     # args.milestones = [50, 100, 150]
     args.gamma = 0.2
 
+    print("Inventory data:", args.inventory_data)
     if args.inventory_data:
         args.pretrain = '/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_sentinel_GEDI_60kpoint.pt'   
         test(args)
