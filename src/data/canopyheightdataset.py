@@ -132,6 +132,10 @@ class CanopyHeightDataset(BaseDataset):
                 file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
                 self.file_idx = file_idx_test
 
+            if self.args.all_inventory_data:
+                file_idx_test = file_idx_all
+                self.file_idx = file_idx_test
+
             # All NERCI inventory data for validation
             # file_idx_test = file_idx_all
             # self.file_idx = file_idx_test

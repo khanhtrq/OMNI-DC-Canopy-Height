@@ -495,6 +495,11 @@ parser.add_argument('--inventory_data',
 parser.add_argument('--regions', 
                     type=str, 
                     help='regions')
+parser.add_argument('--all_inventory_data', 
+                    type=bool, 
+                    default=False, 
+                    help='Using all NERCI inventory data for evaluation')
+
 
 parser.add_argument('--inventory_folder',
                     type=str,
