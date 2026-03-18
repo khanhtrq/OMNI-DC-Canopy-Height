@@ -59,7 +59,7 @@ class CanopyHeightDataset(BaseDataset):
         self.sentinel_folder = args.sentinel_folder
         self.regions = args.regions.split(',')
 
-        self.inventory_evaluation = args.inventory_evaluation
+        self.inventory_data = args.inventory_data
 
         self.height = 480
         self.width = 640
@@ -91,20 +91,20 @@ class CanopyHeightDataset(BaseDataset):
             gedi_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.gedi_folder, r))]
             sentinel_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(self.sentinel_folder, r))]
             
-            if self.inventory_evaluation:
+            if self.inventory_data:
                 inventory_paths_all = [os.path.join(r, file_name) for file_name in os.listdir(os.path.join(inventory_folder, r))]
             
             for i in range(len(gedi_paths_all)):
                 gedi_path = os.path.join(self.gedi_folder, gedi_paths_all[i])
                 gedi = np.load(gedi_path)
                 # if np.sum(~np.isnan(gedi)) >= 50:
-
-                # NERCI inventory data
-                if not self.inventory_evaluation:
+       
+                if not self.inventory_data:
                     if np.sum(~np.isnan(gedi)) >= 50:
 
                         self.gedi_paths.append(gedi_paths_all[i])
                         self.sentinel_paths.append(sentinel_paths_all[i])
+                # NERCI inventory data
                 else:
                     if os.path.exists(os.path.join(inventory_folder, inventory_paths_all[i])):
                         self.inventory_paths.append(inventory_paths_all[i])
@@ -116,16 +116,24 @@ class CanopyHeightDataset(BaseDataset):
         # rng = np.random.default_rng(seed=2404) 
         file_idx_all = rng.permutation(len(self.gedi_paths)) 
 
-        if not self.inventory_evaluation:
+        if not self.inventory_data:
             if self.mode == "train":
                 file_idx_train = file_idx_all[:int(ratio_train * len(self.gedi_paths))]
                 self.file_idx = file_idx_train
             elif self.mode == "test" or self.mode == "val":
                 file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
                 self.file_idx = file_idx_test
-        elif self.inventory_evaluation:
-            file_idx_test = file_idx_all
-            self.file_idx = file_idx_test
+        elif self.inventory_data:
+            if self.mode == "train":
+                file_idx_train = file_idx_all[:int(ratio_train * len(self.gedi_paths))]
+                self.file_idx = file_idx_train
+            elif self.mode == "test" or self.mode == "val":
+                file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
+                self.file_idx = file_idx_test
+
+            # All NERCI inventory data for validation
+            # file_idx_test = file_idx_all
+            # self.file_idx = file_idx_test
 
         print("Dataset length:", len(self.file_idx))
         
@@ -232,7 +240,7 @@ class CanopyHeightDataset(BaseDataset):
         if self.mode == "test" or self.mode == "val":
             dep = dep_ex_sp
 
-        if self.inventory_evaluation:
+        if self.inventory_data:
             # Model evaluation on NERCI inventory data
             # March 13, 2026
             # ---------------

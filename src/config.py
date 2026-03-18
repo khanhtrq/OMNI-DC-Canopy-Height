@@ -487,7 +487,7 @@ parser.add_argument('--save_uniformat_max_dataset_length',
                     default=800,
                     help='if the dataset is too long, subsample to this length')
 
-parser.add_argument('--inventory_evaluation', 
+parser.add_argument('--inventory_data', 
                     type=bool, 
                     default=False, 
                     help='Using NERCI inventory data for evaluation')
