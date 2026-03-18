@@ -54,7 +54,8 @@ if __name__ == '__main__':
 
     # args.pretrain = 'model_best_72epochs.pt'
 
-    train(0, args)
+    if not args.all_inventory_data:
+        train(0, args)
 
     # Evalution on NERCI inventory data
     # args.inventory_evaluation = True
