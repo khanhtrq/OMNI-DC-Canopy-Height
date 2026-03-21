@@ -155,6 +155,12 @@ class CanopyHeightDataset(BaseDataset):
         gedi = np.load(gedi_path)
         rgb = np.load(sentinel_path)
 
+        # March 21, removing for other experiemnt
+        # Filter out GEDI points above 25, suggested by NECI
+        # For training on inventory data
+        gedi[gedi > 25] = np.nan
+
+
         gedi = gedi.astype(np.float32)
         rgb = rgb.astype(np.float32)
 
