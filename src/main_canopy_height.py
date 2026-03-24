@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     # args.pretrain = 'model_best_72epochs.pt'
 
-
+    print(args.training)
     if args.training:
         print("Training the model in main canopy height.")
         train(0, args)
