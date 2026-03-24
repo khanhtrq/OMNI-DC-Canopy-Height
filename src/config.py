@@ -501,11 +501,9 @@ parser.add_argument('--all_inventory_data',
 
 parser.add_argument('--testing', 
                     action='store_true',
-                    default=False, 
                     help='testing mode')
 parser.add_argument('--training', 
                     action='store_true',
-                    default=True, 
                     help='training mode')
 
 parser.add_argument('--inventory_folder',
