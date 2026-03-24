@@ -531,6 +531,9 @@ def test(args):
         metric_val = metric.evaluate(sample, output, 'test')
 
 
+        # Saving qualitative results
+        # March 24, 2026
+        print(type(output['pred']), output['pred'].shape)
 
         writer_test.add(None, metric_val)
 
