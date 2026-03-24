@@ -59,6 +59,7 @@ if __name__ == '__main__':
         print("Training the model in main canopy height.")
         train(0, args)
 
+    print(args.testing)
     if args.testing:
         print("Testing the model in main canopy height.")
         test(args)
