@@ -533,7 +533,7 @@ def test(args):
 
         # Saving qualitative results
         # March 24, 2026
-        print(type(output['pred']), output['pred'].shape)
+        print("Output shape and type:", type(output['pred']), output['pred'].shape)
 
         writer_test.add(None, metric_val)
 
