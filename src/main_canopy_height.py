@@ -54,12 +54,14 @@ if __name__ == '__main__':
 
     # args.pretrain = 'model_best_72epochs.pt'
 
-    if not args.all_inventory_data:
+
+    if args.training:
+        print("Training the model in main canopy height.")
         train(0, args)
 
-    # Evalution on NERCI inventory data
-    # args.inventory_evaluation = True
-    # args.pretrain = '/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_sentinel_GEDI_60kpoint.pt'   
-    # test(args)
+    if args.testing:
+        print("Testing the model in main canopy height.")
+        test(args)
+
 
 

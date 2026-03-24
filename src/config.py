@@ -500,6 +500,14 @@ parser.add_argument('--all_inventory_data',
                     default=False, 
                     help='Using all NERCI inventory data for evaluation')
 
+parser.add_argument('--testing', 
+                    type=bool, 
+                    default=False, 
+                    help='testing mode')
+parser.add_argument('--training', 
+                    type=bool, 
+                    default=True, 
+                    help='training mode')
 
 parser.add_argument('--inventory_folder',
                     type=str,
