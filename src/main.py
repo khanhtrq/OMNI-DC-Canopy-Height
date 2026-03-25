@@ -38,6 +38,8 @@ import torch.cuda.amp as amp
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
+from mathplotlib import pyplot as plt
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -530,19 +532,25 @@ def test(args):
 
         metric_val = metric.evaluate(sample, output, 'test')
 
-
+        saving_qualitative = True
+        if saving_qualitative:
+            pass
         # Saving qualitative results
         # March 24, 2026
 
         qualitative_result = "/kaggle/working/qualitative_results"
         print("Output shape and type:", type(output['pred']), output['pred'].shape)
-        print("Input shape and type:", type(sample['rgb']), sample['rgb'].shape)
-        print("Input shape and type:", type(sample['dep']), sample['dep'].shape)
+        print("Sentinel shape and type:", type(sample['rgb']), sample['rgb'].shape)
+        print("GEDI shape and type:", type(sample['dep']), sample['dep'].shape)
 
-        rgb_img = sample['rgb'][:, 1:4, :, :].cpu().numpy()  # Assuming RGB channels are at indices 2, 3, 4
+        rgb_img = sample['rgb'][:, 1:4, :, :].cpu().numpy() / 6000  # Assuming RGB channels are at indices 2, 3, 4
+        rgb_img = np.clip(rgb_img, 0, 1)
+
+        plt.imsave(f"{qualitative_result}/rgb_draft.png", np.transpose(rgb_img[0, :, :, :], (1, 2, 0)))
+
         prediction = output['pred'].cpu().numpy()
         gedi = sample['dep'].cpu().numpy()
-        
+
         print("RGB shape:", rgb_img.shape)
         print("Prediction shape:", prediction.shape)
         print("GEDI shape:", gedi.shape)
