@@ -552,8 +552,9 @@ def test(args):
 
 
         # Saving GEDI input
-        gedi = sample['dep'].cpu().numpy()
+        gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
         print(np.max(gedi))
+        gedi = gedi[0, :, :]
         # Plot
         # Get valid (non-NaN) indices
         rows, cols = np.where(~np.isnan(gedi))
