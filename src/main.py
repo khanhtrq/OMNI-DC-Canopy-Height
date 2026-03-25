@@ -549,11 +549,41 @@ def test(args):
         plt.imsave(f"{qualitative_result}/rgb_draft_{batch}.png", np.transpose(rgb_img[0, :, :, :], (1, 2, 0)))
 
         prediction = output['pred'].cpu().numpy()
+
+
+        # Saving GEDI input
         gedi = sample['dep'].cpu().numpy()
+        print(np.max(gedi))
+        # Plot
+        # Get valid (non-NaN) indices
+        rows, cols = np.where(~np.isnan(gedi))
+        values = gedi[rows, cols]
+        plt.figure(figsize=(8, 8))
+        sc = plt.scatter(
+            cols, rows,
+            c=values,
+            cmap='YlGn',
+            s=0.1,
+            marker='o',
+            vmin=0,
+            vmax=50    
+        )
+
+        plt.gca().invert_yaxis()
+        plt.axis('off')
+
+        plt.savefig(
+            f"{qualitative_result}/gedi_plot.png",
+            dpi=300,              # high resolution for paper
+            bbox_inches='tight',  # remove extra whitespace
+            pad_inches=0
+        )
+
 
         print("RGB shape:", rgb_img.shape)
         print("Prediction shape:", prediction.shape)
         print("GEDI shape:", gedi.shape)
+        # ---------------------------------------------------
 
         writer_test.add(None, metric_val)
 
