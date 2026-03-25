@@ -554,31 +554,9 @@ def test(args):
         # Saving GEDI input
         gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
         print(np.max(gedi))
-        gedi = prediction[0, :, :]
-        # Plot
-        # Get valid (non-NaN) indices
-        rows, cols = np.where(~np.isnan(gedi))
-        values = gedi[rows, cols]
-        plt.figure(figsize=(8, 8))
-        sc = plt.scatter(
-            cols, rows,
-            c=values,
-            cmap='YlGn',
-            s=0.1,
-            marker='o',
-            vmin=0,
-            vmax=50    
-        )
 
-        plt.gca().invert_yaxis()
-        plt.axis('off')
-
-        plt.savefig(
-            f"{qualitative_result}/gedi_plot.png",
-            dpi=300,              # high resolution for paper
-            bbox_inches='tight',  # remove extra whitespace
-            pad_inches=0
-        )
+        saving_height_map(prediction[0, :, :], f"{qualitative_result}/pred_height_map_{batch}.png")
+        saving_height_map(gedi[0, :, :], f"{qualitative_result}/gedi_height_map_{batch}.png")
 
 
         print("RGB shape:", rgb_img.shape)
@@ -606,6 +584,29 @@ def test(args):
     print('Elapsed time : {} sec, '
           'Average processing time : {} sec'.format(t_total, t_avg))
 
+def saving_height_map(height_map, name):
+    rows, cols = np.where(~np.isnan(height_map))
+    values = height_map[rows, cols]
+    plt.figure(figsize=(8, 8))
+    sc = plt.scatter(
+        cols, rows,
+        c=values,
+        cmap='YlGn',
+        s=0.1,
+        marker='o',
+        vmin=0,
+        vmax=50    
+    )
+
+    plt.gca().invert_yaxis()
+    plt.axis('off')
+
+    plt.savefig(
+        name,
+        dpi=300,              # high resolution for paper
+        bbox_inches='tight',  # remove extra whitespace
+        pad_inches=0
+    )
 
 def main(args):
     init_seed()
