@@ -548,13 +548,13 @@ def test(args):
 
         plt.imsave(f"{qualitative_result}/rgb_draft_{batch}.png", np.transpose(rgb_img[0, :, :, :], (1, 2, 0)))
 
-        prediction = output['pred'].cpu().numpy()
+        prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
 
 
         # Saving GEDI input
         gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
         print(np.max(gedi))
-        gedi = gedi[0, :, :]
+        gedi = prediction[0, :, :]
         # Plot
         # Get valid (non-NaN) indices
         rows, cols = np.where(~np.isnan(gedi))
