@@ -38,7 +38,7 @@ import torch.cuda.amp as amp
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
-from mathplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
