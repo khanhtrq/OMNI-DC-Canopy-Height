@@ -183,8 +183,9 @@ class CanopyHeightDataset(BaseDataset):
             ])
         elif 'sentinel' in self.data_mode:
 
-            mean_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5/svd_means_k5.npy")
-            std_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5/svd_stds_k5.npy")
+            # Loading SVD mean and std
+            # mean_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5/svd_means_k5.npy")
+            # std_array = np.load("/kaggle/input/datasets/khanhtq2101/svd-sentienl-12band/Sentinel-12band-SVD5/Sentinel-12band-SVD5/svd_stds_k5.npy")
 
             t_rgb = T.Compose([
                 T.ToTensor(),
