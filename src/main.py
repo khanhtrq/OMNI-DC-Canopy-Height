@@ -592,7 +592,7 @@ def saving_height_map(height_map, name):
         cols, rows,
         c=values,
         cmap='YlGn',
-        s=0.1,
+        s=1,
         marker='o',
         vmin=0,
         vmax=50    
