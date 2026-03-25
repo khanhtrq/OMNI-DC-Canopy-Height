@@ -555,8 +555,8 @@ def test(args):
         gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
         print(np.max(gedi))
 
-        saving_height_map(prediction[0, :, :], f"{qualitative_result}/pred_height_map_{batch}.png")
-        saving_height_map(gedi[0, :, :], f"{qualitative_result}/gedi_height_map_{batch}.png")
+        saving_height_map_heatmap(prediction[0, :, :], f"{qualitative_result}/pred_height_map_{batch}.png")
+        saving_height_map_heatmap(gedi[0, :, :], f"{qualitative_result}/gedi_height_map_{batch}.png")
 
 
         print("RGB shape:", rgb_img.shape)
@@ -607,6 +607,32 @@ def saving_height_map(height_map, name):
         bbox_inches='tight',  # remove extra whitespace
         pad_inches=0
     )
+
+def saving_height_map_heatmap(height_map, name):
+    masked = np.ma.masked_invalid(height_map)
+    plt.figure(figsize=(8, 8))
+
+    im = plt.imshow(
+        masked,
+        cmap='YlGn',
+        vmin=0,
+        vmax=50
+    )
+
+    # Set NaN color to white
+    im.cmap.set_bad(color='white')
+
+    plt.gca().invert_yaxis()
+    plt.axis('off')
+
+    plt.savefig(
+        name,
+        dpi=300,
+        bbox_inches='tight',
+        pad_inches=0
+    )
+
+    plt.close()
 
 def main(args):
     init_seed()
