@@ -154,11 +154,12 @@ class CanopyHeightDataset(BaseDataset):
 
         gedi = np.load(gedi_path)
         rgb = np.load(sentinel_path)
+        raw_rgb = rgb.copy()
 
         # March 21, removing for other experiemnt
         # Filter out GEDI points above 25, suggested by NECI
         # For training on inventory data
-        gedi[gedi > 25] = np.nan
+        # gedi[gedi > 25] = np.nan
 
 
         gedi = gedi.astype(np.float32)
@@ -264,11 +265,11 @@ class CanopyHeightDataset(BaseDataset):
 
             # 'gt': for computing loss and evaluation
             # 'dep': sparse depth input to the model 
-            output = {'rgb': rgb, 'dep': dep_sp, 'gt': inventory, 'K': K, 'pattern': pattern_id}
+            output = {'rgb': rgb, 'dep': dep_sp, 'gt': inventory, 'K': K, 'pattern': pattern_id, "raw_sentinel": raw_rgb}
             return output
 
         # rgb = rgb[0:1, :, :]  # only use band 1 (red band)
-        output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id}
+        output = {'rgb': rgb, 'dep': dep_sp, 'gt': dep, 'K': K, 'pattern': pattern_id, "raw_sentinel": raw_rgb}
         
 
         return output

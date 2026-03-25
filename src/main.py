@@ -540,13 +540,13 @@ def test(args):
 
         qualitative_result = "/kaggle/working/qualitative_results"
         print("Output shape and type:", type(output['pred']), output['pred'].shape)
-        print("Sentinel shape and type:", type(sample['rgb']), sample['rgb'].shape)
+        print("Sentinel shape and type:", type(sample['raw_sentinel']), sample['raw_sentinel'].shape)
         print("GEDI shape and type:", type(sample['dep']), sample['dep'].shape)
 
-        rgb_img = sample['rgb'][:, 1:4, :, :].cpu().numpy() / 6000  # Assuming RGB channels are at indices 2, 3, 4
+        rgb_img = sample['raw_sentinel'][:, 1:4, :, :].cpu().numpy() / 6000  # Assuming RGB channels are at indices 2, 3, 4
         rgb_img = np.clip(rgb_img, 0, 1)
 
-        plt.imsave(f"{qualitative_result}/rgb_draft.png", np.transpose(rgb_img[0, :, :, :], (1, 2, 0)))
+        plt.imsave(f"{qualitative_result}/rgb_draft_{batch}.png", np.transpose(rgb_img[0, :, :, :], (1, 2, 0)))
 
         prediction = output['pred'].cpu().numpy()
         gedi = sample['dep'].cpu().numpy()
