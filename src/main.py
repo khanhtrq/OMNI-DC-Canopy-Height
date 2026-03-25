@@ -533,9 +533,15 @@ def test(args):
 
         # Saving qualitative results
         # March 24, 2026
+
+        qualitative_result = "/kaggle/working/qualitative_results"
         print("Output shape and type:", type(output['pred']), output['pred'].shape)
         print("Input shape and type:", type(sample['rgb']), sample['rgb'].shape)
         print("Input shape and type:", type(sample['dep']), sample['dep'].shape)
+
+        rgb_img = sample['rgb'][:, 1:4, :, :].cpu().numpy()  # Assuming RGB channels are at indices 2, 3, 4
+        print(rgb_img.shape)
+        
 
         writer_test.add(None, metric_val)
 
