@@ -546,7 +546,6 @@ def test(args):
         rgb_img = sample['raw_sentinel'][:, 1:4, :, :].cpu().numpy() / 6000  # Assuming RGB channels are at indices 2, 3, 4
         rgb_img = np.clip(rgb_img, 0, 1)
 
-        plt.imsave(f"{qualitative_result}/rgb_draft_{batch}.png", np.transpose(rgb_img[0, :, :, :], (1, 2, 0)))
 
         prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
 
@@ -555,8 +554,17 @@ def test(args):
         gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
         print(np.max(gedi))
 
-        saving_height_map_heatmap(prediction[0, :, :], f"{qualitative_result}/pred_height_map_{batch}.png")
-        saving_height_map_heatmap(gedi[0, :, :], f"{qualitative_result}/gedi_height_map_{batch}.png")
+        os.makedirs(f"{qualitative_result}/prediction", exist_ok=True)
+        os.makedirs(f"{qualitative_result}/gedi", exist_ok=True)
+        os.makedirs(f"{qualitative_result}/sentinel_rgb", exist_ok=True)
+
+        for i in range(args.batch_size):
+            saving_height_map_heatmap(prediction[i, :, :], 
+                                      f"{qualitative_result}/prediction/pred_height_map_{batch*args.batch_size + i}.png")
+            saving_height_map_heatmap(gedi[i, :, :], 
+                                      f"{qualitative_result}/gedi/gedi_height_map_{batch*args.batch_size + i}.png")
+            plt.imsave(f"{qualitative_result}/sentinel_rgb/sentinel_rgb_{batch*args.batch_size + i}.png", 
+                       np.transpose(rgb_img[i, :, :, :], (1, 2, 0)))
 
 
         print("RGB shape:", rgb_img.shape)
