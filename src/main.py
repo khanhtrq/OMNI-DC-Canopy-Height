@@ -540,8 +540,12 @@ def test(args):
         print("Input shape and type:", type(sample['dep']), sample['dep'].shape)
 
         rgb_img = sample['rgb'][:, 1:4, :, :].cpu().numpy()  # Assuming RGB channels are at indices 2, 3, 4
-        print(rgb_img.shape)
+        prediction = output['pred'].cpu().numpy()
+        gedi = sample['dep'].cpu().numpy()
         
+        print("RGB shape:", rgb_img.shape)
+        print("Prediction shape:", prediction.shape)
+        print("GEDI shape:", gedi.shape)
 
         writer_test.add(None, metric_val)
 
