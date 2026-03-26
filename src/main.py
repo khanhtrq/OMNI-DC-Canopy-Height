@@ -40,6 +40,9 @@ torch.backends.cudnn.benchmark = False
 
 from matplotlib import pyplot as plt
 
+from datetime import datetime
+
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -536,7 +539,11 @@ def test(args):
         # Saving qualitative results
         # March 24, 2026
 
-            qualitative_result = "/kaggle/working/qualitative_results"
+            qualitative_path = "/kaggle/working/qualitative_results"
+            timestamp = datetime.now().strftime("%y%m%d_%H%M%S")
+            subfolder_name = f"{timestamp}_trial"
+            qualitative_path = os.path.join(qualitative_path, subfolder_name)
+            
             print("Output shape and type:", type(output['pred']), output['pred'].shape)
             print("Sentinel shape and type:", type(sample['raw_sentinel']), sample['raw_sentinel'].shape)
             print("GEDI shape and type:", type(sample['dep']), sample['dep'].shape)
@@ -552,16 +559,16 @@ def test(args):
             gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
             print(np.max(gedi))
 
-            os.makedirs(f"{qualitative_result}/prediction", exist_ok=True)
-            os.makedirs(f"{qualitative_result}/gedi", exist_ok=True)
-            os.makedirs(f"{qualitative_result}/sentinel_rgb", exist_ok=True)
+            os.makedirs(f"{qualitative_path}/prediction", exist_ok=True)
+            os.makedirs(f"{qualitative_path}/gedi", exist_ok=True)
+            os.makedirs(f"{qualitative_path}/sentinel_rgb", exist_ok=True)
 
             for i in range(args.batch_size):
                 saving_height_map_heatmap(prediction[i, :, :], 
-                                        f"{qualitative_result}/prediction/pred_height_map_{batch*args.batch_size + i}.png")
+                                        f"{qualitative_path}/prediction/pred_height_map_{batch*args.batch_size + i}.png")
                 saving_height_map_heatmap(gedi[i, :, :], 
-                                        f"{qualitative_result}/gedi/gedi_height_map_{batch*args.batch_size + i}.png")
-                plt.imsave(f"{qualitative_result}/sentinel_rgb/sentinel_rgb_{batch*args.batch_size + i}.png", 
+                                        f"{qualitative_path}/gedi/gedi_height_map_{batch*args.batch_size + i}.png")
+                plt.imsave(f"{qualitative_path}/sentinel_rgb/sentinel_rgb_{batch*args.batch_size + i}.png", 
                         np.transpose(rgb_img[i, :, :, :], (1, 2, 0)))
 
 
