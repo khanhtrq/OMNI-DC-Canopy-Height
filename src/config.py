@@ -505,6 +505,9 @@ parser.add_argument('--testing',
 parser.add_argument('--training', 
                     action='store_true',
                     help='training mode')
+parser.add_argument('--saving_qualitative', 
+                    action='store_true',
+                    help='save qualitative results')
 
 parser.add_argument('--inventory_folder',
                     type=str,
