@@ -219,7 +219,7 @@ parser.add_argument('--optim_layer_input_clamp',
 parser.add_argument('--backbone_mode',
                     type=str,
                     default='sentineld',
-                    choices=('rgb', 'rgbd'),
+                    choices=('rgb', 'rgbd', 'sentineld', 'sentinel'),
                     help='rgb or rgbd input')
 parser.add_argument('--backbone',
                     type=str,
