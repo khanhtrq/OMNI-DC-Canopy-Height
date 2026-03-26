@@ -476,6 +476,11 @@ def test(args):
     t_total = 0
 
     init_seed()
+    qualitative_path = "/kaggle/working/qualitative_results"
+    timestamp = datetime.now().strftime("%y%m%d_%H%M%S")
+    subfolder_name = f"{timestamp}_trial"
+    qualitative_path = os.path.join(qualitative_path, subfolder_name)
+    
     for batch, sample in enumerate(loader_test):
         if torch.cuda.is_available():
             sample = {key: val.to(device) for key, val in sample.items()
@@ -539,11 +544,7 @@ def test(args):
         # Saving qualitative results
         # March 24, 2026
 
-            qualitative_path = "/kaggle/working/qualitative_results"
-            timestamp = datetime.now().strftime("%y%m%d_%H%M%S")
-            subfolder_name = f"{timestamp}_trial"
-            qualitative_path = os.path.join(qualitative_path, subfolder_name)
-            
+
             print("Output shape and type:", type(output['pred']), output['pred'].shape)
             print("Sentinel shape and type:", type(sample['raw_sentinel']), sample['raw_sentinel'].shape)
             print("GEDI shape and type:", type(sample['dep']), sample['dep'].shape)
