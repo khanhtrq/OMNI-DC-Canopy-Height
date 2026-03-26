@@ -159,7 +159,7 @@ class CanopyHeightDataset(BaseDataset):
         # March 21, removing for other experiemnt
         # Filter out GEDI points above 25, suggested by NECI
         # For training on inventory data
-        # gedi[gedi > 25] = np.nan
+        gedi[gedi < 5] = np.nan
 
 
         gedi = gedi.astype(np.float32)
