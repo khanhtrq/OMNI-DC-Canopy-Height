@@ -577,7 +577,7 @@ def test(args):
                 plt.imsave(f"{qualitative_path}/sentinel_rgb/sentinel_rgb_{batch*args.batch_size + i}.png", 
                         np.transpose(rgb_img[i, :, :, :], (1, 2, 0)))
                 
-                saving_height_map_heatmap(gt[i, :, :], 
+                saving_height_map_scatter(gt[i, :, :], 
                                         f"{qualitative_path}/groundtruth/gt_height_map_{batch*args.batch_size + i}.png",
                                         s=50)
 
@@ -607,7 +607,7 @@ def test(args):
     print('Elapsed time : {} sec, '
           'Average processing time : {} sec'.format(t_total, t_avg))
 
-def saving_height_map(height_map, name):
+def saving_height_map_scatter(height_map, name, s=1):
     rows, cols = np.where(~np.isnan(height_map))
     values = height_map[rows, cols]
     plt.figure(figsize=(8, 8))
@@ -615,7 +615,7 @@ def saving_height_map(height_map, name):
         cols, rows,
         c=values,
         cmap='YlGn',
-        s=1,
+        s=s,
         marker='o',
         vmin=0,
         vmax=50    
