@@ -554,7 +554,7 @@ def test(args):
 
 
             prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
-
+            gt = output['gt'].cpu().numpy().squeeze()
 
             # Saving GEDI input
             gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
@@ -574,8 +574,7 @@ def test(args):
                 plt.imsave(f"{qualitative_path}/sentinel_rgb/sentinel_rgb_{batch*args.batch_size + i}.png", 
                         np.transpose(rgb_img[i, :, :, :], (1, 2, 0)))
                 
-                gt = sample['gt'][i, :, :].cpu().numpy()  # Assuming gt has shape (B, 1, H, W)
-                saving_height_map_heatmap(gt, 
+                saving_height_map_heatmap(gt[i, :, :], 
                                         f"{qualitative_path}/groundtruth/gt_height_map_{batch*args.batch_size + i}.png")
 
 
