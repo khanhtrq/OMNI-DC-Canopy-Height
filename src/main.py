@@ -578,7 +578,8 @@ def test(args):
                         np.transpose(rgb_img[i, :, :, :], (1, 2, 0)))
                 
                 saving_height_map_heatmap(gt[i, :, :], 
-                                        f"{qualitative_path}/groundtruth/gt_height_map_{batch*args.batch_size + i}.png")
+                                        f"{qualitative_path}/groundtruth/gt_height_map_{batch*args.batch_size + i}.png",
+                                        s=50)
 
 
             print("RGB shape:", rgb_img.shape)
