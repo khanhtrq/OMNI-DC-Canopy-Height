@@ -554,7 +554,7 @@ def test(args):
 
 
             prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
-            gt = output['gt'].cpu().numpy().squeeze()
+            gt = sample['gt'].cpu().numpy().squeeze()
 
             # Saving GEDI input
             gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
