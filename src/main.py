@@ -564,8 +564,7 @@ def test(args):
             os.makedirs(f"{qualitative_path}/gedi", exist_ok=True)
             os.makedirs(f"{qualitative_path}/sentinel_rgb", exist_ok=True)
 
-            if args.inventory_data:
-                os.makedirs(f"{qualitative_path}/inventory", exist_ok=True)
+            os.makedirs(f"{qualitative_path}/groundtruth", exist_ok=True)
 
             for i in range(args.batch_size):
                 saving_height_map_heatmap(prediction[i, :, :], 
@@ -575,10 +574,9 @@ def test(args):
                 plt.imsave(f"{qualitative_path}/sentinel_rgb/sentinel_rgb_{batch*args.batch_size + i}.png", 
                         np.transpose(rgb_img[i, :, :, :], (1, 2, 0)))
                 
-                if args.inventory_data:
-                    inventory = sample['inventory'][i, :, :].cpu().numpy()  # Assuming inventory has shape (B, 1, H, W)
-                    saving_height_map_heatmap(inventory, 
-                                            f"{qualitative_path}/inventory/inventory_height_map_{batch*args.batch_size + i}.png")
+                gt = sample['gt'][i, :, :].cpu().numpy()  # Assuming gt has shape (B, 1, H, W)
+                saving_height_map_heatmap(gt, 
+                                        f"{qualitative_path}/groundtruth/gt_height_map_{batch*args.batch_size + i}.png")
 
 
             print("RGB shape:", rgb_img.shape)
