@@ -556,6 +556,9 @@ def test(args):
             prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
             gt = sample['gt'].cpu().numpy().squeeze()
 
+            print("Ground truth valid points:", np.sum(gt > 0))
+            print("Ground truth valid points:", np.sum(~np.isnan(gt)))
+
             # Saving GEDI input
             gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
             print(np.max(gedi))
