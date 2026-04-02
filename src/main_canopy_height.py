@@ -47,7 +47,7 @@ if __name__ == '__main__':
     print("Inventory data:", args.inventory_data)
     if args.inventory_data:
         # args.pretrain = '/kaggle/input/datasets/khanhtq2101/canopy-height-kochi/Kochi_sentinel_GEDI_60kpoint.pt'   
-        test(args)
+        # test(args)
         print("Evaluation on NERCI inventory data done.")
         # args.pretrain = None
 
