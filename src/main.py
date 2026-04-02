@@ -709,8 +709,8 @@ def correlation_heat_map(y_true, y_pred, name):
         name,
         dpi=300,              # high resolution for paper
         bbox_inches='tight',  # remove extra whitespace
-        pad_inches=0,
-        transparent=True
+        pad_inches=0
+        # transparent=True
     )
 
 def main(args):
