@@ -579,7 +579,7 @@ def test(args):
             print("Prediction shape:", prediction.shape)
             print("GEDI shape:", gedi.shape)
 
-            for i in range(args.batch_size):
+            for i in range(prediction.shape[0]):
                 saving_height_map_heatmap(prediction[i, :, :], 
                                         f"{qualitative_path}/prediction/pred_height_map_{batch*args.batch_size + i}.png")
                 saving_height_map_heatmap(gedi[i, :, :], 
