@@ -543,6 +543,12 @@ def test(args):
 
         metric_val = metric.evaluate(sample, output, 'test')
 
+        prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
+        gt = sample['gt'].cpu().numpy().squeeze()
+
+        y_true.extend(gt[~np.isnan(gt)].flatten().tolist())
+        y_pred.extend(prediction[~np.isnan(gt)].flatten().tolist())
+        
         if args.saving_qualitative:
         # Saving qualitative results
         # March 24, 2026
@@ -555,12 +561,6 @@ def test(args):
             rgb_img = sample['raw_sentinel'][:, 1:4, :, :].cpu().numpy() / 6000  # Assuming RGB channels are at indices 2, 3, 4
             rgb_img = np.clip(rgb_img, 0, 1)
 
-
-            prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
-            gt = sample['gt'].cpu().numpy().squeeze()
-
-            y_true.extend(gt[~np.isnan(gt)].flatten().tolist())
-            y_pred.extend(prediction[~np.isnan(gt)].flatten().tolist())
 
             print("Ground truth valid points:", np.sum(gt > 0))
             print("Ground truth valid points:", np.sum(~np.isnan(gt)))
