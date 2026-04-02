@@ -674,7 +674,7 @@ def saving_height_map_heatmap(height_map, name):
 def correlation_heat_map(y_true, y_pred, name):
     print("Saving correlation heatmap with {} valid points.".format(len(y_true)))
     # Create 2D histogram
-    bins = 30
+    bins = 100
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
 
     # Plot
@@ -701,8 +701,8 @@ def correlation_heat_map(y_true, y_pred, name):
     plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
 
     # plt.colorbar(label="Density")
-    plt.xlim(0, 30)
-    plt.ylim(0, 30)
+    plt.xlim(0, 70)
+    plt.ylim(0, 70)
 
     plt.tight_layout()
     plt.savefig(
