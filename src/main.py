@@ -481,6 +481,9 @@ def test(args):
     subfolder_name = f"{timestamp}_trial"
     qualitative_path = os.path.join(qualitative_path, subfolder_name)
     
+    y_true = []
+    y_pred = []
+    
     for batch, sample in enumerate(loader_test):
         if torch.cuda.is_available():
             sample = {key: val.to(device) for key, val in sample.items()
@@ -556,6 +559,9 @@ def test(args):
             prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
             gt = sample['gt'].cpu().numpy().squeeze()
 
+            y_true.extend(gt[~np.isnan(gt)].flatten().tolist())
+            y_pred.extend(prediction[~np.isnan(prediction)].flatten().tolist())
+
             print("Ground truth valid points:", np.sum(gt > 0))
             print("Ground truth valid points:", np.sum(~np.isnan(gt)))
 
@@ -600,6 +606,8 @@ def test(args):
 
     pbar.close()
 
+    print("Total valid points in test set:", len(y_true))
+    print("Total valid points in prediction set:", len(y_pred))
     # writer_test.update(args.epochs, sample, output)
     writer_test.print_loss(args.epochs)
 
@@ -656,6 +664,46 @@ def saving_height_map_heatmap(height_map, name):
     )
 
     plt.close()
+
+def correlation_heat_map(y_true, y_pred, name):
+    # Create 2D histogram
+    bins = 150
+    heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
+
+    # Plot
+    plt.figure(figsize=(5, 5))
+    plt.imshow(
+        heatmap.T,
+        origin='lower',
+        extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]],
+        aspect='auto',
+        cmap='inferno'
+    )
+
+    # Diagonal line (perfect prediction)
+    plt.plot([0, 30], [0, 30], 'k--', linewidth=1.5)
+
+    # Labels
+    plt.xlabel("ALS height [m]")
+    plt.ylabel("Model height [m]")
+
+    # Metrics
+    mae = np.mean(np.abs(y_pred - y_true))
+    r2 = np.corrcoef(y_true, y_pred)[0, 1] ** 2
+
+    plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
+
+    plt.colorbar(label="Density")
+    plt.xlim(0, 30)
+    plt.ylim(0, 30)
+
+    plt.tight_layout()
+    plt.savefig(
+        name,
+        dpi=300,              # high resolution for paper
+        bbox_inches='tight',  # remove extra whitespace
+        pad_inches=0
+    )
 
 def main(args):
     init_seed()
