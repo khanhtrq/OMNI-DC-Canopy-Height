@@ -608,6 +608,10 @@ def test(args):
 
     print("Total valid points in test set:", len(y_true))
     print("Total valid points in prediction set:", len(y_pred))
+
+    os.makedirs(f"{qualitative_path}/correlation", exist_ok=True)
+    correlation_heat_map(y_true, y_pred, f"{qualitative_path}/correlation/correlation_heatmap.png")
+
     # writer_test.update(args.epochs, sample, output)
     writer_test.print_loss(args.epochs)
 
