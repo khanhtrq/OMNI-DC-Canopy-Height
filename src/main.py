@@ -543,8 +543,8 @@ def test(args):
 
         metric_val = metric.evaluate(sample, output, 'test')
 
-        prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
-        gt = sample['gt'].cpu().numpy().squeeze()
+        prediction = output['pred'].cpu().numpy().squeeze(axis=1)  # Assuming pred has shape (B, 1, H, W)
+        gt = sample['gt'].cpu().numpy().squeeze(axis=1)
 
         y_true.extend(gt[~np.isnan(gt)].flatten().tolist())
         y_pred.extend(prediction[~np.isnan(gt)].flatten().tolist())
