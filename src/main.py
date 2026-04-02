@@ -574,6 +574,10 @@ def test(args):
             os.makedirs(f"{qualitative_path}/sentinel_rgb", exist_ok=True)
 
             os.makedirs(f"{qualitative_path}/groundtruth", exist_ok=True)
+            
+            print("RGB shape:", rgb_img.shape)
+            print("Prediction shape:", prediction.shape)
+            print("GEDI shape:", gedi.shape)
 
             for i in range(args.batch_size):
                 saving_height_map_heatmap(prediction[i, :, :], 
@@ -588,9 +592,7 @@ def test(args):
                                         s=50)
 
 
-            print("RGB shape:", rgb_img.shape)
-            print("Prediction shape:", prediction.shape)
-            print("GEDI shape:", gedi.shape)
+
             # ---------------------------------------------------
 
         writer_test.add(None, metric_val)
