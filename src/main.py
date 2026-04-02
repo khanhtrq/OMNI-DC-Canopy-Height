@@ -684,7 +684,7 @@ def correlation_heat_map(y_true, y_pred, name):
         origin='lower',
         extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]],
         aspect='auto',
-        cmap='inferno'
+        cmap='YlGn'
     )
 
     # Diagonal line (perfect prediction)
