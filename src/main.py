@@ -678,7 +678,7 @@ def correlation_heat_map(y_true, y_pred, name):
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
 
     # Plot
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(5, 5), facecolor='white')
     plt.imshow(
         heatmap.T,
         origin='lower',
@@ -709,7 +709,8 @@ def correlation_heat_map(y_true, y_pred, name):
         name,
         dpi=300,              # high resolution for paper
         bbox_inches='tight',  # remove extra whitespace
-        pad_inches=0
+        pad_inches=0,
+        transparent=True
     )
 
 def main(args):
