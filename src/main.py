@@ -560,7 +560,7 @@ def test(args):
             gt = sample['gt'].cpu().numpy().squeeze()
 
             y_true.extend(gt[~np.isnan(gt)].flatten().tolist())
-            y_pred.extend(prediction[~np.isnan(prediction)].flatten().tolist())
+            y_pred.extend(prediction[~np.isnan(gt)].flatten().tolist())
 
             print("Ground truth valid points:", np.sum(gt > 0))
             print("Ground truth valid points:", np.sum(~np.isnan(gt)))
