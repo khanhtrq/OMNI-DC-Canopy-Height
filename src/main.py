@@ -483,6 +483,7 @@ def test(args):
     
     y_true = []
     y_pred = []
+    heatmap_all = np.zeros((150, 150))
     
     for batch, sample in enumerate(loader_test):
         if torch.cuda.is_available():
@@ -546,9 +547,12 @@ def test(args):
         prediction = output['pred'].cpu().numpy().squeeze()  # Assuming pred has shape (B, 1, H, W)
         gt = sample['gt'].cpu().numpy().squeeze()
 
-        y_true.extend(gt[~np.isnan(gt)].flatten().tolist())
-        y_pred.extend(prediction[~np.isnan(gt)].flatten().tolist())
-        
+        # y_true.extend(gt[~np.isnan(gt)].flatten().tolist())
+        # y_pred.extend(prediction[~np.isnan(gt)].flatten().tolist())
+
+        heatmap, xedges, yedges = np.histogram2d(gt[~np.isnan(gt)].flatten(), prediction[~np.isnan(gt)].flatten(), bins=150)
+        heatmap_all += heatmap
+
         if args.saving_qualitative:
         # Saving qualitative results
         # March 24, 2026
@@ -612,7 +616,7 @@ def test(args):
     print("Total valid points in prediction set:", len(y_pred))
 
     os.makedirs(f"{qualitative_path}/correlation", exist_ok=True)
-    correlation_heat_map(np.array(y_true), np.array(y_pred), f"{qualitative_path}/correlation/correlation_heatmap.png")
+    correlation_heat_map(heatmap_all, f"{qualitative_path}/correlation/correlation_heatmap.png")
 
     # writer_test.update(args.epochs, sample, output)
     writer_test.print_loss(args.epochs)
@@ -671,11 +675,10 @@ def saving_height_map_heatmap(height_map, name):
 
     plt.close()
 
-def correlation_heat_map(y_true, y_pred, name):
+def correlation_heat_map(heatmap, name):
     print("Saving correlation heatmap with {} valid points.".format(len(y_true)))
     # Create 2D histogram
     bins = 150
-    heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
 
     # Plot
     plt.figure(figsize=(5, 5), facecolor='white')
