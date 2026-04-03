@@ -680,7 +680,7 @@ def correlation_heat_map(y_true, y_pred, name):
     bins = 10
     bins = np.linspace(0, 50, 50)
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
-    max_range = 45
+    max_range = 50
     
     cmap = plt.cm.YlGn  # or your cmap
 
