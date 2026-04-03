@@ -685,6 +685,7 @@ def correlation_heat_map(y_true, y_pred, name):
     # Set background to lowest color of cmap
     ax.set_facecolor(cmap(0))
 
+    heatmap = heatmap / heatmap.sum()
     plt.imshow(
         heatmap.T,
         origin='lower',
@@ -694,7 +695,7 @@ def correlation_heat_map(y_true, y_pred, name):
     )
 
     # Diagonal line (perfect prediction)
-    plt.plot([0, max_range], [0, max_range], 'k--', linewidth=1.5)
+    plt.plot([0, max_range], [0, max_range], 'k--', linewidth=0.5)
 
     # Labels
     plt.xlabel("Ground truth height [m]")
