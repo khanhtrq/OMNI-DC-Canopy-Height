@@ -698,7 +698,7 @@ def correlation_heat_map(y_true, y_pred, name):
     mae = np.mean(np.abs(y_pred - y_true))
     r2 = np.corrcoef(y_true, y_pred)[0, 1] ** 2
 
-    plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
+    # plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
 
     # plt.colorbar(label="Density")
     plt.xlim(0, 70)
