@@ -692,7 +692,7 @@ def correlation_heat_map(y_true, y_pred, name):
         extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]],
         aspect='auto',
         cmap='YlGn',
-        vmax = 1,
+        # vmax = 1,
         vmin= 0
     )
 
@@ -705,7 +705,7 @@ def correlation_heat_map(y_true, y_pred, name):
 
     # Metrics
     mae = np.mean(np.abs(y_pred - y_true))
-    r2 = np.corrcoef(y_true, y_pred)[0, 1] ** 2
+    r2 = np.corrcoef(y_true, y_pred)[0, 1] ** 2 
 
     # plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
 
