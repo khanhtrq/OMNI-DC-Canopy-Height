@@ -677,8 +677,13 @@ def correlation_heat_map(y_true, y_pred, name):
     bins = 100
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
 
-    # Plot
-    plt.figure(figsize=(5, 5), facecolor='white')
+    cmap = plt.cm.YlGn  # or your cmap
+
+    fig, ax = plt.subplots(figsize=(5, 5))
+
+    # Set background to lowest color of cmap
+    ax.set_facecolor(cmap(0))
+
     plt.imshow(
         heatmap.T,
         origin='lower',
