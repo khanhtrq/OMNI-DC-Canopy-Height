@@ -612,8 +612,9 @@ def test(args):
     print("Total valid points in prediction set:", len(y_pred))
 
     os.makedirs(f"{qualitative_path}/correlation", exist_ok=True)
-    correlation_heat_map(np.array(y_true), np.array(y_pred), f"{qualitative_path}/correlation/correlation_heatmap.png")
-
+    heatmap = correlation_heat_map(np.array(y_true), np.array(y_pred), f"{qualitative_path}/correlation/correlation_heatmap.png")
+    np.save(f"{qualitative_path}/correlation/correlation_heatmap.npy", heatmap)
+    
     # writer_test.update(args.epochs, sample, output)
     writer_test.print_loss(args.epochs)
 
@@ -692,7 +693,7 @@ def correlation_heat_map(y_true, y_pred, name):
         extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]],
         aspect='auto',
         cmap='YlGn',
-        # vmax = 1,
+        vmax = 0.004,
         vmin= 0
     )
 
@@ -721,6 +722,7 @@ def correlation_heat_map(y_true, y_pred, name):
         pad_inches=0
         # transparent=True
     )
+    return heatmap
 
 def main(args):
     init_seed()
