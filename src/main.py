@@ -677,9 +677,9 @@ def saving_height_map_heatmap(height_map, name):
 def correlation_heat_map(y_true, y_pred, name):
     print("Saving correlation heatmap with {} valid points.".format(len(y_true)))
     # Create 2D histogram
-    bins = 50
+    bins = 30
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
-    max_range = 50
+    max_range = 30
     
     cmap = plt.cm.YlGn  # or your cmap
 
@@ -695,7 +695,7 @@ def correlation_heat_map(y_true, y_pred, name):
         extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]],
         aspect='auto',
         cmap='YlGn',
-        vmax = 0.008,
+        # vmax = 0.008,
         vmin= 0
     )
 
@@ -712,7 +712,7 @@ def correlation_heat_map(y_true, y_pred, name):
 
     # plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
 
-    # plt.colorbar(label="Density")
+    plt.colorbar(label="Density")
     plt.xlim(0, max_range)
     plt.ylim(0, max_range)
 
