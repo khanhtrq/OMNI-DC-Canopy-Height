@@ -677,7 +677,7 @@ def saving_height_map_heatmap(height_map, name):
 def correlation_heat_map(y_true, y_pred, name):
     print("Saving correlation heatmap with {} valid points.".format(len(y_true)))
     # Create 2D histogram
-    bins = 30
+    bins = 10
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
     max_range = 50
     
