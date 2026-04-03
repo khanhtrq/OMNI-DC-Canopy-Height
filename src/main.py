@@ -678,8 +678,7 @@ def correlation_heat_map(y_true, y_pred, name):
     print("Saving correlation heatmap with {} valid points.".format(len(y_true)))
     # Create 2D histogram
     bins = 10
-    bins = np.linspace(0, 50, 100)
-
+    bins = np.linspace(0, 50, 50)
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
     max_range = 45
     
