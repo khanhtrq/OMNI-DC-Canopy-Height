@@ -566,7 +566,7 @@ def test(args):
             print("Ground truth valid points:", np.sum(~np.isnan(gt)))
 
             # Saving GEDI input
-            gedi = sample['dep'].cpu().numpy().squeeze()  # Assuming dep has shape (B, 1, H, W)
+            gedi = sample['dep'].cpu().numpy().squeeze(axis=1)  # Assuming dep has shape (B, 1, H, W)
             print(np.max(gedi))
 
             os.makedirs(f"{qualitative_path}/prediction", exist_ok=True)
@@ -614,7 +614,7 @@ def test(args):
     os.makedirs(f"{qualitative_path}/correlation", exist_ok=True)
     heatmap = correlation_heat_map(np.array(y_true), np.array(y_pred), f"{qualitative_path}/correlation/correlation_heatmap.png")
     np.save(f"{qualitative_path}/correlation/correlation_heatmap.npy", heatmap)
-    
+
     # writer_test.update(args.epochs, sample, output)
     writer_test.print_loss(args.epochs)
 
