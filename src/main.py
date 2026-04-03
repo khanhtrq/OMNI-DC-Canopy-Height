@@ -678,7 +678,7 @@ def correlation_heat_map(y_true, y_pred, name):
     print("Saving correlation heatmap with {} valid points.".format(len(y_true)))
     # Create 2D histogram
     bins = 10
-    bins = np.linspace(0, 50, 50)
+    bins = np.linspace(0, 50, 25)
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
     max_range = 50
     
@@ -713,7 +713,7 @@ def correlation_heat_map(y_true, y_pred, name):
 
     # plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
 
-    plt.colorbar(label="Density")
+    # plt.colorbar(label="Density")
     plt.xlim(0, max_range)
     plt.ylim(0, max_range)
 
