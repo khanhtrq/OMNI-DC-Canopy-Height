@@ -676,7 +676,7 @@ def correlation_heat_map(y_true, y_pred, name):
     # Create 2D histogram
     bins = 100
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
-    max_range = 70
+    max_range = 50
     
     cmap = plt.cm.YlGn  # or your cmap
 
@@ -707,7 +707,7 @@ def correlation_heat_map(y_true, y_pred, name):
 
     # plt.text(1, 25, f"MAE={mae:.1f}m\n$R^2$={r2:.2f}", fontsize=12)
 
-    # plt.colorbar(label="Density")
+    plt.colorbar(label="Density")
     plt.xlim(0, max_range)
     plt.ylim(0, max_range)
 
