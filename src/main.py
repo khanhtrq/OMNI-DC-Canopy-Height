@@ -691,8 +691,8 @@ def correlation_heat_map(y_true, y_pred, name):
     plt.plot([0, 30], [0, 30], 'k--', linewidth=1.5)
 
     # Labels
-    plt.xlabel("ALS height [m]")
-    plt.ylabel("Model height [m]")
+    plt.xlabel("Ground truth height [m]")
+    plt.ylabel("Predicted height [m]")
 
     # Metrics
     mae = np.mean(np.abs(y_pred - y_true))

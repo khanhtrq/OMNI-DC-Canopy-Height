@@ -364,7 +364,7 @@ parser.add_argument('--train_depth_velodyne_random_baseline',
                     help='number of sparse samples')
 parser.add_argument('--val_depth_pattern',
                     type=str,
-                    default='500',
+                    default='60000',
                     help='number of sparse samples')
 parser.add_argument('--inference_pattern_type',
                     type=str,
