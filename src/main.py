@@ -614,6 +614,8 @@ def test(args):
     os.makedirs(f"{qualitative_path}/correlation", exist_ok=True)
     heatmap = correlation_heat_map(np.array(y_true), np.array(y_pred), f"{qualitative_path}/correlation/correlation_heatmap.png")
     np.save(f"{qualitative_path}/correlation/correlation_heatmap.npy", heatmap)
+    np.save(f"{qualitative_path}/correlation/y_true.npy", np.array(y_true))
+    np.save(f"{qualitative_path}/correlation/y_pred.npy", np.array(y_pred))
 
     # writer_test.update(args.epochs, sample, output)
     writer_test.print_loss(args.epochs)
@@ -675,7 +677,7 @@ def saving_height_map_heatmap(height_map, name):
 def correlation_heat_map(y_true, y_pred, name):
     print("Saving correlation heatmap with {} valid points.".format(len(y_true)))
     # Create 2D histogram
-    bins = 100
+    bins = 50
     heatmap, xedges, yedges = np.histogram2d(y_true, y_pred, bins=bins)
     max_range = 50
     
@@ -693,7 +695,7 @@ def correlation_heat_map(y_true, y_pred, name):
         extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]],
         aspect='auto',
         cmap='YlGn',
-        vmax = 0.004,
+        vmax = 0.008,
         vmin= 0
     )
 
