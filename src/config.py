@@ -511,6 +511,10 @@ parser.add_argument('--saving_qualitative',
 parser.add_argument('--k_fold', 
                     action='store_true',
                     help='k-fold cross-validation mode')
+parser.add_argument('--fold_index', 
+                    type=int, 
+                    default=0, 
+                    help='the fold index for k-fold validation (0-4)')
 
 parser.add_argument('--inventory_folder',
                     type=str,

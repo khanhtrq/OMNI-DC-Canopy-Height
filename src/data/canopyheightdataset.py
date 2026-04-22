@@ -48,13 +48,13 @@ regions = ["Kochi"]
 
 
 class CanopyHeightDataset(BaseDataset):
-    def __init__(self, args, mode, fold_index = 1):
+    def __init__(self, args, mode):
         super(CanopyHeightDataset, self).__init__(args, mode)
 
         self.args = args
         self.data_mode = args.backbone_mode
         self.mode = mode
-        self.fold_index = fold_index
+        self.fold_index = self.args.fold_index
 
         self.gedi_folder = args.gedi_folder
         self.sentinel_folder = args.sentinel_folder
@@ -132,7 +132,7 @@ class CanopyHeightDataset(BaseDataset):
             if self.args.k_fold:
                 splits = np.array_split(file_idx_all, 5)
                 file_idx_train = splits[self.fold_index]
-                file_idx_test = np.concatenate(splits[:fold_index] + splits[fold_index+1:])
+                file_idx_test = np.concatenate(splits[:self.fold_index] + splits[self.fold_index+1:])
 
                 if self.mode == "train":
                     self.file_idx = file_idx_train

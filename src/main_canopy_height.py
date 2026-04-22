@@ -53,10 +53,16 @@ if __name__ == '__main__':
 
     # args.pretrain = 'model_best_72epochs.pt'
 
-    print(args.training)
     if args.training:
-        print("Training the model in main canopy height.")
-        train(0, args)
+        if args.k_fold:
+            for fold_index in range(5):
+                args.fold_index = fold_index
+                print(f"Training fold {fold_index} in main canopy height.")
+                train(0, args)
+        else:
+            print("K-fold cross-validation mode enabled.")
+            print("Training the model in main canopy height.")
+            train(0, args)
 
     print(args.testing)
     if args.testing:
