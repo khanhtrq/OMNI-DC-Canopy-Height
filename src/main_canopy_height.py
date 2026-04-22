@@ -56,13 +56,9 @@ if __name__ == '__main__':
     if args.training:
         print("K-fold validation mode:", args.k_fold)
         if args.k_fold:
-            for fold_index in range(5):
-                args.fold_index = fold_index
-                print(f"Training fold {fold_index} in main canopy height.")
-                train(0, args)
+            print(f"Training fold {args.fold_index} in main canopy height.")
+            train(0, args)
         else:
-            print("K-fold cross-validation mode enabled.")
-            print("Training the model in main canopy height.")
             train(0, args)
 
     print(args.testing)
