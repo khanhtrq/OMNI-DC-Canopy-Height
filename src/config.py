@@ -508,6 +508,9 @@ parser.add_argument('--training',
 parser.add_argument('--saving_qualitative', 
                     action='store_true',
                     help='save qualitative results')
+parser.add_argument('--k_fold', 
+                    action='store_true',
+                    help='k-fold cross-validation mode')
 
 parser.add_argument('--inventory_folder',
                     type=str,

@@ -48,12 +48,13 @@ regions = ["Kochi"]
 
 
 class CanopyHeightDataset(BaseDataset):
-    def __init__(self, args, mode):
+    def __init__(self, args, mode, fold_index = 1):
         super(CanopyHeightDataset, self).__init__(args, mode)
 
         self.args = args
         self.data_mode = args.backbone_mode
         self.mode = mode
+        self.fold_index = fold_index
 
         self.gedi_folder = args.gedi_folder
         self.sentinel_folder = args.sentinel_folder
@@ -124,21 +125,31 @@ class CanopyHeightDataset(BaseDataset):
             elif self.mode == "test" or self.mode == "val":
                 file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
                 self.file_idx = file_idx_test
+        
         elif self.inventory_data:
-            if self.mode == "train":
-                file_idx_train = file_idx_all[:int(ratio_train * len(self.gedi_paths))]
-                self.file_idx = file_idx_train
-            elif self.mode == "test" or self.mode == "val":
-                file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
-                self.file_idx = file_idx_test
+            # K-fold validation
+            print("K-fold validation mode:", self.args.k_fold)
+            if self.args.k_fold:
+                splits = np.array_split(file_idx_all, 5)
+                file_idx_train = splits[self.fold_index]
+                file_idx_test = np.concatenate(splits[:fold_index] + splits[fold_index+1:])
 
+                if self.mode == "train":
+                    self.file_idx = file_idx_train
+                elif self.mode == "test" or self.mode == "val":
+                    self.file_idx = file_idx_test
+            # No k-fold valication (first fold)
+            else:
+                if self.mode == "train":
+                    file_idx_train = file_idx_all[:int(ratio_train * len(self.gedi_paths))]
+                    self.file_idx = file_idx_train
+                elif self.mode == "test" or self.mode == "val":
+                    file_idx_test = file_idx_all[int(ratio_train * len(self.gedi_paths)):]
+                    self.file_idx = file_idx_test
+            
             if self.args.all_inventory_data:
                 file_idx_test = file_idx_all
                 self.file_idx = file_idx_test
-
-            # All NERCI inventory data for validation
-            # file_idx_test = file_idx_all
-            # self.file_idx = file_idx_test
 
         print("Dataset length:", len(self.file_idx))
         
