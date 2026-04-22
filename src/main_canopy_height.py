@@ -54,6 +54,7 @@ if __name__ == '__main__':
     # args.pretrain = 'model_best_72epochs.pt'
 
     if args.training:
+        print("K-fold validation mode:", args.k_fold)
         if args.k_fold:
             for fold_index in range(5):
                 args.fold_index = fold_index
